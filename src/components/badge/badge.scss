@@ -1,0 +1,15 @@
+@use '../../scss/' as *;
+.badge {
+  font-size: .85rem;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+.badge-bg-second {
+  background-color: $second-color;
+}
+
+.badge-color-white {
+  color: #fff;
+}

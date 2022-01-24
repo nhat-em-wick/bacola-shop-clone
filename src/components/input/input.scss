@@ -1,0 +1,13 @@
+@use '../../scss/' as *;
+input {
+  border: 0;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  color: $txt-second-color;
+  background-color: $input-bg;
+  border-radius: $border-radius;
+}
+
+input:focus {
+  outline: none;
+}

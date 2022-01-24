@@ -1,0 +1,207 @@
+@use '../../scss/' as *;
+
+.product-card {
+  padding: 15px 20px 20px;
+  border: 1px solid $color-border;
+  transition: box-shadow .3s linear;
+  position: relative;
+  height: 100%;
+  
+  &:hover {
+    box-shadow: $box-shadow;
+    border: 1px solid $color-border-dark;
+
+    
+  }
+
+  &:hover &__action {
+    right: 20px;
+    opacity: 1;
+  }
+
+
+  &__badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+  }
+
+  &__action {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    opacity: 0;
+    transition: .4s ease;
+    z-index: 1;
+     & > *~*{
+       margin-top: 5px;
+     }
+    &__quick-view,  &__heart{
+      
+      &:hover *{
+        background-color: $primary-color;
+        color: $txt-white;
+        border: none;
+      }
+    }
+
+    
+
+    &__quick-view:hover{
+      svg {
+        fill: #fff;
+      }
+    }
+  }
+  &__img {
+    overflow: hidden;
+    position: relative;
+    padding-top: 100%;
+    img {
+      position: absolute;
+      top: 0;
+      // left: 50%;
+      // transform: translateX(-50%);
+      height: 100%;
+
+      &:nth-child(1) {
+        transform: scale(1);
+        transition: transform .5s ease;
+      }
+
+      &:nth-child(2) {
+        transform: scale(0);
+        // transition: transform .5s ease;
+      }
+
+      
+    }
+  }
+
+  &:hover img {
+    &:nth-child(1) {
+      transform: scale(0);
+    }
+
+    &:nth-child(2) {
+      animation: zoomIn 4s;
+      animation-fill-mode:forwards;
+    }
+  }
+
+  &__info {
+    position: relative;
+    &__name {
+      font-size: .9rem;
+      font-weight: 500;
+      color: $txt-color;
+      overflow: hidden;
+      display: block;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    &__stock {
+      margin-top: 5px;
+      font-size: .7rem;
+      color: $color-success-dark;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    &__rating {
+      font-size: .7rem;
+      margin-top: 20px;
+      .number-rating {
+        margin-left: 5px;
+        color: $txt-second-color;
+      }
+    }
+
+    &__star-outer{
+      position: relative;
+      display: inline-block;
+      &::before {
+        content: "\eeb8 \eeb8 \eeb8 \eeb8 \eeb8";
+        font-family: "Boxicons";
+        color: $txt-color-light;
+      }
+    }
+
+    &__star-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+
+      &::before {
+        content: "\eeb8 \eeb8 \eeb8 \eeb8 \eeb8";
+        font-family: "Boxicons";
+        color: $color-rating;
+      }
+    }
+
+    &__price {
+      margin-top: 20px;
+    }
+
+    &__old-price {
+      color: $txt-color-light;
+      margin-right: 10px;
+      text-decoration: line-through;
+    }
+
+    &__new-price {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: $color-price;
+    }
+
+  }
+  &__addtocart {
+    margin-top: 20px;
+    
+  }
+}
+
+.product-card-fadein{
+  &:hover {
+    box-shadow: $box-shadow;
+    border: 1px solid $second-color;
+    height: calc(100% + 50px);
+    z-index: 10;
+    background-color: #fff;
+  }
+
+  &:hover .product-card__addtocart {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .product-card__addtocart{
+    position: absolute;
+    width: 100%;
+    bottom: -40%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  
+}
+
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}

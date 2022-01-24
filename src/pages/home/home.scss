@@ -1,0 +1,28 @@
+@use '../../scss/' as *;
+.product-slider {
+  border: 1px solid $color-border;
+  position: relative;
+  &__control--prev,
+  &__control--next {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  &__control--prev {
+    left: -20px;
+
+    @include mobile {
+      left: 0;
+    }
+  }
+
+  &__control--next {
+    right: -20px;
+    @include mobile {
+      right: 0;
+    }
+  }
+}

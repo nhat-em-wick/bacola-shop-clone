@@ -1,0 +1,119 @@
+@use '../../scss/' as *;
+.hero-slider {
+  margin-top: $header-height;
+  position: relative;
+  width: 100%;
+
+  @include tablet {
+    margin-top: $header-shrink-height;
+  }
+
+
+  &__next-arrow,
+  &__prev-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    background-color: rgba($color: #fff, $alpha: 0.3);
+    border-radius: 50%;
+    @include flex(center, center);
+    cursor: pointer;
+    font-size: 2rem;
+    color: $txt-second-color;
+
+    @include mobile {
+      display: none;
+    }
+
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.6);
+    }
+  }
+
+  &__next-arrow {
+    right: 20px;
+  }
+
+  &__prev-arrow{
+    left: 20px;
+  }
+
+  .slide-item {
+    position: relative;
+    height: 400px;
+    @include tablet {
+      height: 300px;
+    }
+
+    &__img {
+      height: 100%;
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .slide-item__info {
+    width: 400px;
+    position: absolute;
+    z-index: 10;
+    top: 20%;
+    left: 10%;
+    
+    @include tablet {
+      top: 10%;
+    }
+
+    @include mobile {
+      width: 250px;
+      top: 20%;
+    }
+
+    &-title {
+      font-size: 3rem;
+      color: $txt-color;
+      font-weight: 700;
+
+      @include tablet {
+        font-size: 2.7rem;
+      }
+      @include mobile {
+        font-size: 2.4rem;
+      }
+
+    }
+
+    &-description{
+      margin-top: 10px;
+      font-size: 1.3rem;
+      color: $txt-second-color;
+
+      @include tablet {
+        font-size: 1.2rem;
+        margin-top: 5px;
+      }
+    }
+
+    &-price {
+      margin-top: 20px;
+      font-size: 2rem;
+      font-weight: 500;
+      color: $color-price;
+
+      @include tablet {
+        margin-top: 10px;
+        font-size: 1.8rem;
+      }
+    }
+
+    button {
+      margin-top: 20px;
+    }
+  }
+}
+
+

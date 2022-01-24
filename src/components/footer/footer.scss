@@ -1,0 +1,166 @@
+@use '../../scss/' as *;
+
+.footer {
+  background-color: $second-bg;
+}
+
+.policy {
+  padding-top: 30px;
+  
+}
+
+.footer__content {
+  background-color: $second-bg;
+  padding: 50px 0;
+  @include mobile {
+    padding: 30px 0;
+    text-align: center;
+  }
+  &__item {
+
+    &__title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: $txt-color;
+      margin-bottom: 20px;
+      text-transform: capitalize;
+    }
+
+    &__body {
+      & > * ~ *{
+        margin-top: 10px;
+      }
+    }
+
+    &__link {
+      color: $txt-second-color;
+      transition: .3s ease;
+      @include mobile {
+        font-size: 1.2rem;
+      }
+      &:hover {
+        color: $second-color;
+      }
+    }
+
+    &__app {
+      & > * ~ * {
+        margin-top: 10px;
+      }
+      img {
+        width: 40%;
+        @include mobile {
+          width: 30%;
+        }
+      }
+    }
+  }
+}
+
+.footer__bottom {
+  padding: 50px 0;
+  @include mobile {
+    padding: 20px 0;
+  }
+  &-wrapper {
+    @include flex(space-between, center);
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+  &__hotline {
+    @include flex(flex-start, center);
+    @include mobile {
+      margin-bottom: 30px;
+    }
+    &__icon {
+      margin-right: 20px;
+    }
+
+    &__text {
+      &__phone {
+        color: $txt-color;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      &__work {
+        color: $txt-second-color;
+      }
+    }
+  }
+
+  &__social {
+    @include flex(flex-start, center);
+    & > *~*{
+      margin-left: 10px;
+    }
+
+    &__btn {
+      position: relative;
+      @include flex(center, center);
+      flex-direction: column;
+      z-index: 2;
+      border-radius: 50%;
+    }
+
+    &__btn:hover &__tooltip {
+      opacity: 1;
+      top: -55px;
+    }
+
+    &__btn.facebook:hover &__tooltip,
+    &__btn.facebook:hover &__tooltip::before,
+    &__btn.facebook:hover .btn-circle {
+      background-color: #3E89FE;
+      color: #fff;
+    }
+
+    &__btn.github:hover &__tooltip,
+    &__btn.github:hover &__tooltip::before,
+    &__btn.github:hover .btn-circle{
+      background-color: #24292F;
+      color: #fff;
+    }
+
+    &__btn.tiktok:hover &__tooltip,
+    &__btn.tiktok:hover &__tooltip::before,
+    &__btn.tiktok:hover .btn-circle {
+      background-color: #24292F;
+      color: #fff;
+    }
+    &__btn.instagram:hover &__tooltip,
+    &__btn.instagram:hover &__tooltip::before,
+    &__btn.instagram:hover .btn-circle {
+      background-color: #C13584;
+      color: #fff;
+    }
+
+    &__tooltip {
+      background-color: #fff;
+      box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: .1);
+      font-size: 1rem;
+      padding: 10px 15px;
+      border-radius: 25px;
+      position: absolute;
+      top: 0;
+      opacity: 0;
+      transition: all .4s cubic-bezier(0.68, -0.55,0.265, 1.55);
+      pointer-events: none;
+      font-weight: 500;
+
+      &::before{
+        content: '';
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #fff;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+      transition: all .4s cubic-bezier(0.68, -0.55,0.265, 1.55);
+        
+      }
+    }
+  }
+}

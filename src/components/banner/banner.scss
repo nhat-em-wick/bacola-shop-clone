@@ -1,0 +1,44 @@
+@use '../../scss/' as *;
+
+.banner {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  &__img {
+    height: 100%;
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content{
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    transform: translateY(-50%);
+
+    &__title-top{
+      color: $color-price;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    &__title-main{
+      color: $txt-color;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    &__description {
+      font-weight: 400;
+      color: $txt-second-color;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+    }
+  }
+}

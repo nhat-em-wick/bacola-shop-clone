@@ -1,0 +1,80 @@
+@use '../../scss/' as *;
+.btn {
+  display: inline-block;
+  min-width: 100px;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: $txt-white;
+  padding: .75rem 1.8rem;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &.btn--bg-yellow {
+    background-color: $color-rating;
+  }
+
+  &.btn--bg-red {
+    background-color: $color-danger;
+  }
+
+  &.btn--bg-primary {
+    background-color: $primary-color;
+  }
+
+  &.btn--bg-second {
+    background-color: $second-color;
+  }
+
+  &.btn--size-s {
+    padding: .55rem 1.3rem;
+  }
+
+  &.btn--color-black {
+    color: $txt-color;
+  }
+  
+  &.btn--width {
+    width: 100%;
+  }
+
+  &.btn--box-shadow {
+    box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: .1);
+  }
+}
+
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid $color-border;
+  font-size: 1.3rem;
+  color: $txt-second-color;
+  cursor: pointer;
+  @include flex(center, center);
+
+  
+  svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  &--color-black {
+    color: $txt-second-color;
+  }
+
+  &--bg-white {
+    background-color: $main-bg;
+  }
+
+  &--size-lg {
+    width: 50px;
+    height: 50px;
+  }
+
+  &--box-shadow {
+    box-shadow: 0px 3px 3px rgba($color: #000000, $alpha: .1);
+  }
+
+}
