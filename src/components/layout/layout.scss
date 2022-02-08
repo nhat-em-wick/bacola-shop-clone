@@ -1,0 +1,9 @@
+@use '../../scss/' as *;
+
+.main {
+  margin-top: $header-height;
+
+  @include tablet {
+    margin-top: calc($header-shrink-height + 10px);
+  }
+}

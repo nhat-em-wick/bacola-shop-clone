@@ -14,6 +14,7 @@ const Button = (props) => {
       className={`btn btn--size-${size} btn--bg-${bg} btn--color-${color} ${
         width ? `btn--width` : ""
       } ${boxShadow && "btn--box-shadow"} ${className}`}
+      onClick={props.onClick ? props.onClick : null}
     >
       {props.children}
     </button>
@@ -31,6 +32,7 @@ export const ButtonCircle = (props) => {
       className={`btn-circle btn-circle--size-${size} btn-circle--color-${color}  btn-circle--bg-${bg} ${
         boxShadow && "btn-circle--box-shadow"
       } ${className}`}
+      onClick={props.onClick ? props.onClick : null}
     >
       {props.children}
     </div>

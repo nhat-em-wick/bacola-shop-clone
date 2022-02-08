@@ -1,0 +1,86 @@
+@use '../../scss/' as *;
+
+.tab-pane__description {
+  line-height: 1.5rem;
+  font-size: 1rem;
+  color: $txt-color;
+}
+
+.tab-pane__review {
+  &__list {
+    &>*~*{
+      margin-top: 20px;
+    }
+    &__item {
+      display: flex;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: $color-border;
+        bottom: -10px;left: 0;
+      }
+
+      .avatar {
+        margin-right: 10px;
+        &__img {
+          width: 40px;
+          height: 40px;
+          @include flex(center, center);
+          border-radius: 50%;
+          background-color: $second-bg;
+          border: 1px solid $color-border-dark;
+          i{
+            font-size: 1.5rem;
+            color: $txt-color;
+          }
+        }
+      }
+
+      .info {
+        color: $txt-color;
+        &__date {
+          font-size: .9rem;
+          color: $txt-second-color;
+        }
+
+        &__star-outer{
+          position: relative;
+          display: inline-block;
+          &::before {
+            content: "\eeb8 \eeb8 \eeb8 \eeb8 \eeb8";
+            font-family: "Boxicons";
+            color: $txt-color-light;
+          }
+        }
+    
+        &__star-inner {
+          position: absolute;
+          top: 0;
+          left: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          width: 0;
+    
+          &::before {
+            content: "\eeb8 \eeb8 \eeb8 \eeb8 \eeb8";
+            font-family: "Boxicons";
+            color: $color-rating;
+          }
+        }
+
+        &__comment {
+          margin-top: 10px;
+          line-height: 1.3rem;
+        }
+      }
+    }
+  }
+
+  &__write {
+    margin-top: 30px;
+  }
+}

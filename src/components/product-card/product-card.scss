@@ -10,8 +10,6 @@
   &:hover {
     box-shadow: $box-shadow;
     border: 1px solid $color-border-dark;
-
-    
   }
 
   &:hover &__action {
@@ -92,8 +90,9 @@
 
   &__info {
     position: relative;
+    margin-top: 10px;
     &__name {
-      font-size: .9rem;
+      font-size: 1rem;
       font-weight: 500;
       color: $txt-color;
       overflow: hidden;
@@ -186,12 +185,19 @@
   }
 
   .product-card__addtocart{
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: -40%;
     visibility: hidden;
     opacity: 0;
     transition: opacity .4s ease;
+
+    button {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+
+    }
   }
   
 }

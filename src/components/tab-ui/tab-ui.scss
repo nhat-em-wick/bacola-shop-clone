@@ -1,0 +1,47 @@
+@use '../../scss/' as *;
+
+.tab-wrapper {
+  padding: 20px 30px;
+}
+
+.tab-title {
+  display: flex;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: $color-border;
+  }
+
+  &__item {
+    padding: 15px 20px;
+    font-size: 1.3rem;
+    color: $txt-color-light;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+
+    &.active {
+      color: $txt-color;
+    }
+  }
+}
+
+.tab-content {
+  padding-top: 10px;
+}
+
+.tab-pane {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+

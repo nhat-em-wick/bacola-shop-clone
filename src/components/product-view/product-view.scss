@@ -1,0 +1,118 @@
+@use "../../scss/" as *;
+
+.product-view {
+  padding: 10px 30px;
+  &__img-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  &__img__list {
+    img {
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  }
+  &__img__main {
+    img {
+    }
+  }
+
+  &__info {
+    padding-left: 20px;
+    @include tablet {
+      padding-left: 0;
+      margin-top: 10px;
+    }
+    &__name {
+      font-size: 2rem;
+      font-weight: 500;
+      color: $txt-color;
+      overflow: hidden;
+      display: block;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    &__price {
+      margin-top: 20px;
+      .old {
+        font-size: 1.5rem;
+        margin-right: 10px;
+        text-decoration: line-through;
+        color: $txt-color-light;
+      }
+
+      .new {
+        font-size: 1.8rem;
+        color: $color-price;
+        font-weight: 500;
+      }
+    }
+
+    &__description {
+      margin-top: 20px;
+      font-size: 1rem;
+      line-height: 1.3rem;
+      color: $txt-second-color;
+    }
+
+    &__quantity {
+      @include flex(flex-start, center);
+      margin-top: 20px;
+      & > * ~ * {
+        margin-left: 15px;
+      }
+    }
+
+    &__add-to-cart {
+      margin-top: 10px;
+      
+      display: flex;
+      &>*~*{
+        margin-left: 10px;
+      }
+    }
+
+    &__category {
+      margin-top: 20px;
+      display: flex;
+      font-size: 0.9rem;
+      color: $txt-second-color;
+      &__list {
+        @include flex(flex-start, center);
+        & > * {
+          margin-left: 5px;
+        }
+      }
+
+      &__item {
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+
+    &__social {
+      @include flex(flex-start, center);
+      margin-top: 30px;
+      & > * ~ * {
+        margin-left: 10px;
+      }
+
+      &__item {
+        color: $txt-white;
+
+        &.facebook {
+          background-color: #3b5998;
+        }
+        &.instagram {
+          background-color: #c13584;
+        }
+        &.twitter {
+          background-color: #4aa1f2;
+        }
+      }
+    }
+  }
+}

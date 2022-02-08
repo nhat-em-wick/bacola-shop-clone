@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import HeroSlider from "../../components/hero-slider/HeroSlider";
 import Section, {
@@ -9,13 +9,14 @@ import Category from "../../components/category/Category";
 import ProductCard from "../../components/product-card/ProductCard";
 import Banner from "../../components/banner/Banner";
 import { ButtonCircle } from "../../components/button/Button";
-import dataProduct from "../../assets/fake-data/products";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import banner1 from "../../assets/silder/slider1.jpg";
 import banner2 from "../../assets/silder/slider-image-7.jpg";
 
 import "./home.scss";
+
+import shopApi from '../../api/shopApi'
 
 const Home = () => {
   const settings = {
@@ -47,17 +48,34 @@ const Home = () => {
 
   const sliderRef = useRef(null);
 
+  const [productList, setProductList] = useState([])
+
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try{
+        const params = { 
+          _page: 1,
+          _limit: 10
+         }
+        const response = await shopApi.getProductList(params)
+        setProductList(response.data)
+      }catch (e) {
+        console.log(e)
+      }
+    }
+    fetchProductList()
+  },[])
+
   return (
-    <div>
+     
+    
+    <>
       <HeroSlider />
-      <Section>
-        <Category />
-      </Section>
       <Section>
         <SectionTitle>sản phẩm bán chạy</SectionTitle>
         <SectionBody>
           <div className="row no-gutters">
-            {dataProduct.getCountProducts(10).map((item, index) => (
+            {productList.map((item, index) => (
               <div key={index} className="l-2-4 m-4 c-6">
                 <ProductCard
                   item={item}
@@ -105,7 +123,7 @@ const Home = () => {
         <SectionBody>
           <div className="product-slider">
             <Slider ref={sliderRef} {...settings}>
-              {dataProduct.getAllProduct().map((item, index) => (
+              {productList.map((item, index) => (
                 <div key={index}>
                   <ProductCard
                     item={item}
@@ -129,7 +147,7 @@ const Home = () => {
         <SectionTitle>Sản phẩm mới</SectionTitle>
         <SectionBody>
           <div className="row no-gutters">
-            {dataProduct.getCountProducts(10).map((item, index) => (
+            {productList.map((item, index) => (
               <div key={index} className="l-2-4 m-4 c-6">
                 <ProductCard
                   item={item}
@@ -146,8 +164,8 @@ const Home = () => {
           </div>
         </SectionBody>
       </Section>
-      <Section></Section>
-    </div>
+    </>
+  
   );
 };
 

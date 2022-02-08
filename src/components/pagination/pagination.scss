@@ -1,0 +1,33 @@
+@use '../../scss/' as *;
+.pagination {
+  @include flex(center, center);
+  margin-top: 30px;
+  &> *~*{
+    margin-left: 10px;
+  }
+  &__item {
+    &__link {
+      font-size: 1rem;
+      color: $txt-color;
+      transition: .3s ease;
+      -webkit-transition: .3s ease;
+      -moz-transition: .3s ease;
+      -o-transition: .3s ease;
+
+      &:hover {
+        background-color: $primary-color;
+        color: $txt-white;
+      }
+
+      &.active {
+        background-color: $primary-color;
+        color: $txt-white;
+      }
+
+      &.disable {
+        pointer-events: none;
+        color: $txt-color-light;
+      }
+    }
+  }
+}

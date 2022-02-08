@@ -1,0 +1,134 @@
+@use '../../scss/' as *;
+
+.cart {
+
+  &__empty {
+    text-align: center;
+    &__img {
+      margin-bottom: 10px;
+      img{
+        width: 30%;
+      }
+    }
+
+    &__btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: $primary-color;
+      min-width: 100px;
+      color: $txt-white;
+      display: inline-block;
+      border-radius: 5px;
+    }
+
+  }
+
+  &__list {
+    padding: 10px 20px;
+    @include mobile {
+      padding: 10px 0;
+    }
+    &> *~*{
+      margin-top: 10px;
+    }
+    &__item {
+      @include flex(flex-start, center);
+      &__img {
+        margin-right: 20px;
+        img{
+          width: 80px;
+          height: 100px;
+        }
+      }
+      &__info {
+        flex: 1;
+        @include flex(space-between, center);
+        flex-wrap: wrap;
+        &__name {
+          width: 40%;
+          color: $txt-color;
+          overflow: hidden;
+          display: block;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+
+          @include mobile {
+            width: 100%;
+            margin-bottom: 10px;
+          }
+        }
+        &__price {
+          color: $color-price;
+        }
+        &__quantity {
+          @include flex(flex-start, center);
+          & > * {
+            margin-left: 10px;
+          }
+          .btn-circle {
+            width: 30px;
+            height: 30px;
+          }
+        }
+        &__remove {
+          font-size: 1.3rem;
+          cursor: pointer;
+          color: $txt-color;
+
+          &:hover {
+            color: $color-danger;
+          }
+        }
+      }
+    }
+  }
+
+  &__checkout {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid $color-border;
+
+    &__provisional, &__discount, &__total-price {
+      @include flex(space-between, center);
+      margin-bottom: 20px;
+      color: $txt-color;
+
+      .title {
+        font-size: 1.2rem;
+
+        @include mobile {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    &__total-price {
+      .price {
+        font-size: 1.5rem;
+        color: $color-price;
+        font-weight: 500;
+      }
+    }
+
+    &__btn {
+      &__order, &__back {
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+        background-color: $primary-color;
+        color: $txt-white;
+        border-radius: 5px;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        @include mobile {
+          font-size: .9rem;
+        }
+      }
+      &__order {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 .section {
   margin-top: 30px;
-
+  position: relative;
   @include mobile {
     margin-left: 10px;
     margin-right: 10px;

@@ -1,0 +1,57 @@
+@use '../../scss/' as *;
+
+.shop {
+ 
+  
+  &__filter {
+    padding-right: 20px;
+    color: $txt-color;
+    &__title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    &__category {
+      margin-bottom: 20px;
+      &__list {
+        & > * {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    &__price {
+      &__range {
+        margin: 30px 0 10px;
+      }
+
+      &__action {
+        margin-top: 30px;
+        text-align: right;
+        font-weight: 500;
+        font-size: 1.2rem;
+        cursor: pointer;
+
+        &:hover {
+          color: $second-color;
+        }
+      }
+    }
+    &__clear {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
+  &__products {
+    position: relative;
+
+    // .loading {
+    //   position: absolute;
+    //   top: 20px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    // }
+  }
+}
+

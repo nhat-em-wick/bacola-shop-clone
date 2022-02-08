@@ -1,0 +1,55 @@
+@use '../../scss/' as *;
+
+.cart__list__item {
+  @include flex(flex-start, center);
+  &__img {
+    margin-right: 20px;
+    img{
+      width: 80px;
+      height: 100px;
+    }
+  }
+  &__info {
+    flex: 1;
+    @include flex(space-between, center);
+    flex-wrap: wrap;
+    &__name {
+      width: 40%;
+      color: $txt-color;
+      overflow: hidden;
+      display: block;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      &:hover {
+        color: $primary-color;
+      }
+      @include mobile {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+    &__price {
+      color: $color-price;
+    }
+    &__quantity {
+      @include flex(flex-start, center);
+      & > * {
+        margin-left: 10px;
+      }
+      .btn-circle {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    &__remove {
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: $txt-color;
+
+      &:hover {
+        color: $color-danger;
+      }
+    }
+  }
+}
