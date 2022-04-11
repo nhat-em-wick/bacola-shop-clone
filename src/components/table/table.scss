@@ -1,0 +1,92 @@
+@use '../../scss/' as *;
+
+$status--pending: #F6C719;
+$bg-status--pending: #FEF8DD;
+$status--success: $primary-color;
+$bg-status--success: #F1FAFF;
+$status--shipping: #6CCD89;
+$bg-status--shipping: #E8FEF3;
+$status--rejeced: #EA4070;
+$bg-status--rejected: #FDF5F8;
+
+.table-wrapper {
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; 
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent; 
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal:hover,
+  &::-webkit-scrollbar-thumb:vertical:hover {
+    background: $color-border-dark; 
+  }
+  
+  .status{
+    padding: 8px 15px;
+    border-radius: 5px;
+
+    &--success {
+      background-color: $bg-status--success;
+      color: $status--success;
+    }
+
+    &--pending {
+      background-color: $bg-status--pending;
+      color: $status--pending;
+    }
+
+    &--shipping {
+      background-color: $bg-status--shipping;
+      color: $status--shipping;
+    }
+
+    &--confirmed {
+      background-color: $bg-status--shipping;
+      color: $status--shipping;
+    }
+
+    &--rejected {
+      background-color: $bg-status--rejected;
+      color: $status--rejeced;
+    }
+  }
+
+  
+}
+
+table {
+  width: 100%;
+  min-width: calc(100% + 200px);
+  border-spacing: 0;
+
+  @include mobile {
+    min-width: calc(100% + 500px);
+  }
+}
+
+tr {
+  text-align: left;
+  color: $txt-color;
+}
+
+th, td {
+  padding: 20px 10px;
+  border-bottom: 1px solid $color-border;
+  color: $txt-color;
+  max-width: 200px;
+  min-width: 20px;
+}
+
+th {
+  text-transform: capitalize;
+}
+

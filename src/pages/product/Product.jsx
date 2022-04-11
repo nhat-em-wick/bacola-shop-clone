@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useParams} from 'react-router-dom'
 import Section, { SectionTitle, SectionBody} from '../../components/section/Section';
 import ProductView from '../../components/product-view/ProductView';
 import ProductCard from '../../components/product-card/ProductCard';
 import TabUI, {TabTitle, TabContent, TabPane} from '../../components/tab-ui/TabUI';
-
+import Helmet from '../../components/helmet/Helmet';
 import shopApi from '../../api/shopApi'
+import { notifyError } from '../../components/toast/Toast';
 
 
 import './product.scss'
@@ -24,11 +25,16 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productId = params.productId
+        const productId = params.slug
         const response = await shopApi.getProduct(productId)
-        setProduct(response)
+        setProduct(response.product)
+        setFilters({
+          ...filters,
+          cate: [response.product.category._id]
+        })
       } catch (error) {
-        console.log(error)
+        console.log(error.response)
+        notifyError(error.response.data.message)
       }
     }
     fetchProduct()
@@ -45,28 +51,30 @@ const Product = () => {
         return setActiveTab(0)
     }
   }
+  const timerID = useRef(null)
 
   useEffect(() => {
-    let timerID
     const fetchProductList = async () => {
       try{
         const params = filters
         const response = await shopApi.getProductList(params)
-        timerID = setTimeout(() => {
-          setProductList(response.data)
+        timerID.current = setTimeout(() => {
+          setProductList(response.products)
         }, 1000);
-        
       }catch (e) {
         console.log(e)
+        notifyError(e.response.data.message);
       }
       // 
     }
     fetchProductList()
-    return () => clearTimeout(timerID)
+    return () => clearTimeout(timerID.current)
   },[filters])
 
   return (
     <>
+    <Helmet title="Sản phẩm">
+    
       <Section>
         <SectionBody>
           <>
@@ -95,7 +103,7 @@ const Product = () => {
               <TabContent>
                 <TabPane active={activeTab === 0 && true}>
                   <div className="tab-pane__description">
-                    {product && product.description}
+                    {product && product.long_description}
                   </div>
                 </TabPane>
                 <TabPane active={activeTab === 1 && true}>
@@ -149,7 +157,7 @@ const Product = () => {
         </SectionBody>
       </Section>
       <Section>
-        <SectionTitle>San pham cung danh muc</SectionTitle>
+        <SectionTitle>Sản phẩm cùng danh mục</SectionTitle>
         <SectionBody>
         <div className="products-relative">
             
@@ -174,6 +182,7 @@ const Product = () => {
           </div>
         </SectionBody>
       </Section>
+      </Helmet>
     </>
   );
 };

@@ -1,0 +1,57 @@
+@use '../../scss/' as *;
+
+.dropdown {
+  position: relative;
+  z-index: 99;
+  width: max-content;
+  &__toggle {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    
+    
+    &>i {
+      font-size: 1.8rem;
+      color: $txt-color;
+    }
+
+    &-badge {
+      @include flex(center, center);
+      position: absolute;
+      top: -8px;
+      right: -6px;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background-color: $color-danger;
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+  }
+  &__content {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    width: max-content;
+    max-width: 400px;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 5px;
+    overflow: hidden;
+    transform-origin: top right;
+    transform: scale(0);
+    transition: transform .3s ease 0s;
+
+    &.active {
+      transform: scale(1);
+      transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+  }
+
+  &__footer {
+    padding: 20px;
+  }
+}

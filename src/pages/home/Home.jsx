@@ -11,14 +11,19 @@ import Banner from "../../components/banner/Banner";
 import { ButtonCircle } from "../../components/button/Button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+import Skeleton, { SkeletonElement } from "../../components/skeleton/Skeleton";
+import Helmet from "../../components/helmet/Helmet";
 import banner1 from "../../assets/silder/slider1.jpg";
 import banner2 from "../../assets/silder/slider-image-7.jpg";
 
 import "./home.scss";
 
-import shopApi from '../../api/shopApi'
+import shopApi from "../../api/shopApi";
+import { notifyError } from "../../components/toast/Toast";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -48,47 +53,90 @@ const Home = () => {
 
   const sliderRef = useRef(null);
 
-  const [productList, setProductList] = useState([])
+  const [newProducts, setNewProducts] = useState([]);
+  const [bestSellerProducts, setBestSellerProducts] = useState([])
+  const timerIdRef1 = useRef(null)
+  const timerIdRef2 = useRef(null)
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+        const params = {
+          _page: 1,
+          _limit: 10,
+        };
+        const response = await shopApi.getProductList(params);
+        timerIdRef1.current = setTimeout(() => {
+          setNewProducts(response.products);
+          setLoading(false);
+        }, 1000);
+      } catch (e) {
+        setLoading(true);
+        console.log(e);
+        notifyError(e.response.data.message)
+      }
+    };
+    fetchProductList();
+    return () => clearTimeout(timerIdRef1.current);
+  }, []);
 
   useEffect(() => {
     const fetchProductList = async () => {
-      try{
-        const params = { 
+      try {
+        const params = {
           _page: 1,
-          _limit: 10
-         }
-        const response = await shopApi.getProductList(params)
-        setProductList(response.data)
-      }catch (e) {
-        console.log(e)
+          _limit: 10,
+          best_seller: true
+        };
+        const response = await shopApi.getProductList(params);
+        timerIdRef2.current = setTimeout(() => {
+          setBestSellerProducts(response.products);
+          setLoading(false);
+        }, 1000);
+      } catch (e) {
+        setLoading(true);
+        console.log(e);
+        notifyError(e.response.data.message)
       }
-    }
-    fetchProductList()
-  },[])
+    };
+    fetchProductList();
+    return () => clearTimeout(timerIdRef2.current);
+  }, []);
 
   return (
-     
-    
     <>
+    <Helmet title="Trang chủ">
       <HeroSlider />
       <Section>
         <SectionTitle>sản phẩm bán chạy</SectionTitle>
         <SectionBody>
           <div className="row no-gutters">
-            {productList.map((item, index) => (
-              <div key={index} className="l-2-4 m-4 c-6">
-                <ProductCard
-                  item={item}
-                  type="fadein"
-                  btn={{
-                    width: "100%",
-                    size: "s",
-                    bg: "primary",
-                    color: "white",
-                  }}
-                />
-              </div>
-            ))}
+            {loading &&
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                <div key={n} className="l-2-4 m-4 c-6">
+                  <Skeleton>
+                    <SkeletonElement type="img" />
+                    <SkeletonElement type="name" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="price" />
+                  </Skeleton>
+                </div>
+              ))}
+            {!loading &&
+              bestSellerProducts.map((item, index) => (
+                <div key={index} className="l-2-4 m-4 c-6">
+                  <ProductCard
+                    item={item}
+                    type="fadein"
+                    btn={{
+                      width: "100%",
+                      size: "s",
+                      bg: "primary",
+                      color: "white",
+                    }}
+                  />
+                </div>
+              ))}
           </div>
         </SectionBody>
       </Section>
@@ -123,9 +171,22 @@ const Home = () => {
         <SectionBody>
           <div className="product-slider">
             <Slider ref={sliderRef} {...settings}>
-              {productList.map((item, index) => (
-                <div key={index}>
+            { loading &&
+              [1, 2, 3, 4, 5].map((n) => (
+                <div key={n}>
+                  <Skeleton>
+                    <SkeletonElement type="img" />
+                    <SkeletonElement type="name" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="price" />
+                  </Skeleton>
+                </div>
+              ))}
+              { !loading && newProducts.map((item, index) => (
+                
                   <ProductCard
+                    key={index}
                     item={item}
                     type="simple"
                     btn={{
@@ -135,7 +196,7 @@ const Home = () => {
                       color: "black",
                     }}
                   />
-                </div>
+                
               ))}
             </Slider>
             <ControlNext onClick={() => sliderRef?.current?.slickNext()} />
@@ -147,7 +208,21 @@ const Home = () => {
         <SectionTitle>Sản phẩm mới</SectionTitle>
         <SectionBody>
           <div className="row no-gutters">
-            {productList.map((item, index) => (
+
+          {loading &&
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                <div key={n} className="l-2-4 m-4 c-6">
+                  <Skeleton>
+                    <SkeletonElement type="img" />
+                    <SkeletonElement type="name" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="span" />
+                    <SkeletonElement type="price" />
+                  </Skeleton>
+                </div>
+              ))}
+
+            { !loading && newProducts.map((item, index) => (
               <div key={index} className="l-2-4 m-4 c-6">
                 <ProductCard
                   item={item}
@@ -164,8 +239,8 @@ const Home = () => {
           </div>
         </SectionBody>
       </Section>
+      </Helmet>
     </>
-  
   );
 };
 

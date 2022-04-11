@@ -1,0 +1,15 @@
+@use '../../scss/' as *;
+
+.go-to-top{
+  width: max-content;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: none;
+  border-radius: 50%;
+  border: 3px solid $primary-color;
+  &.active {
+    display: block;
+  }
+}

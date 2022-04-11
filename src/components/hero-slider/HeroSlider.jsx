@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
@@ -67,7 +68,7 @@ const SlideItem = (props) => (
         {props.item.description}
       </div>
       <div className="slide-item__info-price">${props.item.price}</div>
-      <Button bg="second">Shop now</Button>
+      <Link to="/shop"><Button bg="second">Shop now</Button></Link>
     </div>
   </div>
 );

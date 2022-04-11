@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PolicyCard from "../policy-card/PolicyCard";
-import categories from "../../assets/fake-data/categories";
 import Button, { ButtonCircle } from "../button/Button";
 import Section, { SectionBody } from "../section/Section";
 import policy from "../../assets/fake-data/policy";
 
 import chPlay from "../../assets/images/google-play.png";
 import appStore from "../../assets/images/app-store.png";
+
+import { menuBacola } from "../../constant";
 
 import "./footer.scss";
 const Footer = () => {
@@ -32,15 +33,23 @@ const Footer = () => {
             <div className="row">
               <div className="col gap l-3 m-6 c-12">
                 <div className="footer__content__item">
-                  <FooterItemTitle>danh mục sản phẩm</FooterItemTitle>
+                  <FooterItemTitle>Giới thiệu</FooterItemTitle>
                   <FooterItemBody>
-                    {categories.slice(0, 5).map((item, index) => (
+                    Đây là trang web được clone lại từ Bacola Shop, chỉ dùng cho việc học tập, không dùng cho thương mại.
+                  </FooterItemBody>
+                </div>
+              </div>
+              <div className="col gap l-3 m-6 c-12">
+                <div className="footer__content__item">
+                  <FooterItemTitle>trang web</FooterItemTitle>
+                  <FooterItemBody>
+                    {menuBacola.map((item, index) => (
                       <Link
                         className="footer__content__item__link"
                         to={item.path}
                         key={index}
                       >
-                        {item.name}
+                        {item.display}
                       </Link>
                     ))}
                   </FooterItemBody>
@@ -48,33 +57,14 @@ const Footer = () => {
               </div>
               <div className="col gap l-3 m-6 c-12">
                 <div className="footer__content__item">
-                  <FooterItemTitle>danh mục sản phẩm</FooterItemTitle>
+                  <FooterItemTitle>liên hệ</FooterItemTitle>
                   <FooterItemBody>
-                    {categories.slice(0, 5).map((item, index) => (
-                      <Link
-                        className="footer__content__item__link"
-                        to={item.path}
-                        key={index}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </FooterItemBody>
-                </div>
-              </div>
-              <div className="col gap l-3 m-6 c-12">
-                <div className="footer__content__item">
-                  <FooterItemTitle>danh mục sản phẩm</FooterItemTitle>
-                  <FooterItemBody>
-                    {categories.slice(0, 5).map((item, index) => (
-                      <Link
-                        className="footer__content__item__link"
-                        to={item.path}
-                        key={index}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    <div className="footer__content__item__link">
+                      Địa chỉ: 51/50 Lê Thị Hồng, Phường 17, Gò Vấp, Thành phố Hồ Chí Minh
+                    </div>
+                    <div className="footer__content__item__link">
+                      Điện thoại: 012 345 6789
+                    </div>
                   </FooterItemBody>
                 </div>
               </div>
@@ -83,10 +73,10 @@ const Footer = () => {
                   <FooterItemTitle>tải ứng dụng</FooterItemTitle>
                   <FooterItemBody>
                     <div className="footer__content__item__app">
-                      <Link to="#">
+                      <Link to="#" className="footer__content__item__app__img">
                         <img src={chPlay} alt="" />
                       </Link>
-                      <Link to="#">
+                      <Link to="#" className="footer__content__item__app__img">
                         <img src={appStore} alt="" />
                       </Link>
                     </div>

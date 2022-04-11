@@ -1,0 +1,126 @@
+@use '../../scss/' as *;
+
+.contact {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 13%);
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+
+.contact-info {
+  padding-right: 30px;
+  &>*~* {
+    margin-top: 20px;
+  }
+  &__title {
+    color: $txt-color;
+    font-size: 1.2rem;
+  }
+  &__item {
+    @include flex(flex-start, center);
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    margin-right: 20px;
+    color: $txt-color;
+  }
+
+  &__text {
+    color: $txt-color;
+    line-height: 1.5rem;
+  }
+
+}
+
+.contact-form {
+ 
+  @include tablet {
+    margin-top: 30px;
+  }
+  &__title {
+    color: $txt-color;
+    font-size: 1.2rem;
+  }
+  &__btn {
+    padding: 10px 25px;
+    background-color: $primary-color;
+    display: flex;
+    width: fit-content;
+    border-radius: 5px;
+    color: #fff;
+    margin-top: 20px;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    
+    .spinner {
+      @include flex(center, center);
+      width: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: .3s ease-in-out;
+      opacity: 0;
+
+      &.active {
+        width: 1rem;
+        visibility: visible;
+        opacity: 1;
+        margin-right: 10px;
+      }
+    }
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+}
+
+.google-map {
+  width: 100%;
+}
+
+.accordion-wrap {
+  
+}
+
+.accordion {
+  border: 1px solid $second-color;
+  & + & {
+    border-top:none;
+  }
+  &__title {
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: $txt-color;
+    cursor: pointer;
+    @include flex(space-between, center);
+  }
+  &.active &__title {
+    color: $primary-color;
+  }
+ 
+  &__icon {
+    i{
+      transition: .3s ease-in-out;
+    }
+  }
+  &.active &__icon {
+    i {
+      transform: rotate(180deg);
+    }
+  }
+  &__content {
+    padding: 0 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: .4s ease;
+    background-color: #fff;
+    line-height: 1.5rem;
+    color: $txt-color;
+  }
+  &.active &__content {
+    padding: 1rem;
+    max-height: 9em;
+  }
+}

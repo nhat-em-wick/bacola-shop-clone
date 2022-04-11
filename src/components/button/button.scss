@@ -10,7 +10,9 @@
   padding: .75rem 1.8rem;
   border-radius: $border-radius;
   cursor: pointer;
-
+  &:hover {
+    opacity: .9;
+  }
   &.btn--bg-yellow {
     background-color: $color-rating;
   }

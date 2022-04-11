@@ -1,23 +1,26 @@
-import axiosClient from './axiosClient'
-
-export const category = {
-  baby: 'baby',
-  computers: 'computers',
-  jewelery: 'jewelery',
-  games: 'games',
-  automotive: 'automotive',
-  shoes: "shoes"
-}
+import axiosClient from "./axiosClient";
 
 const shopApi = {
   getProductList: (params) => {
-    const url = 'products/'
-    return axiosClient.get(url, {params})
+    const url = "products";
+    return axiosClient.get(url, {params} );
   },
-  getProduct: (id) => {
-    const url = `products/${id}`
-    return axiosClient.get(url)
+  getProduct: (slug) => {
+    const url = `products/${slug}`;
+    return axiosClient.get(url);
+  },
+  getCategories: () => {
+    const url = "categories";
+    return axiosClient.get(url);
+  },
+  getCart: (params) => {
+    const url = "cart";
+    return axiosClient.get(url, {params});
+  },
+  tracking: (params) => {
+    const url = `products/tracking`
+    return axiosClient.get(url, {params});
   }
-}
+};
 
-export default shopApi
+export default shopApi;

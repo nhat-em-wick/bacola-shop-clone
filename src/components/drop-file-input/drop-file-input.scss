@@ -1,0 +1,116 @@
+@use '../../scss' as *;
+
+.drop-file {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border: 2px dashed $primary-color;
+  border-radius: 10px;
+  @include flex(center, center);
+  background-color: #F1FAFF;
+  
+  &>input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  &:hover, &.dragover {
+    opacity: .6;
+  }
+
+  &__lable {
+    text-align: center;
+    color: $txt-color;
+    font-weight: 600;
+    padding: 10px;
+
+    img {
+      width: 100px;
+    }
+  }
+}
+
+.file-list {
+  
+  margin-top: 30px;
+
+  
+
+  &-preview__item {
+    flex: 1;
+    padding: 10px;
+    background-color: #e1e4e6;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 10px;
+    transition: box-shadow .3s ease;
+    
+    img {
+      border: 1px solid $color-border;
+    }
+
+    &:hover {
+      box-shadow: $box-shadow;
+    }
+
+    &:hover &--del {
+      opacity: 1;
+    }
+
+    &--del {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 35px;
+      height: 35px;
+      background-color: #fff;
+      box-shadow: $box-shadow;
+      @include flex(center, center);
+      font-size: 1.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      color: $txt-color;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+  }
+}
+
+.upload-btn {
+padding: 10px 25px;
+    background-color: $primary-color;
+    display: flex;
+    width: fit-content;
+    border-radius: 5px;
+    color: #fff;
+    margin-top: 20px;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  
+  .spinner {
+    @include flex(center, center);
+    width: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: .3s ease-in-out;
+    opacity: 0;
+
+    &.active {
+      width: 1rem;
+      visibility: visible;
+      opacity: 1;
+      margin-right: 10px;
+    }
+  }
+
+  &:hover {
+    opacity: .9;
+  }
+}

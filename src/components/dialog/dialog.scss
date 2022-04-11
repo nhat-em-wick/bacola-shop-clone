@@ -1,0 +1,81 @@
+@use '../../scss/' as *;
+.dialog {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  @include flex(center, center);
+
+  display: none;
+
+  animation: fadeIn linear .2s;
+
+  &.active {
+    display: flex;
+  }
+
+  &__content {
+    background-color: #fff;
+    width: 400px;
+    border-radius: 5px;
+    padding: 20px;
+    animation: growth linear .2s;
+  }
+  &__header {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: $txt-color;
+    text-transform: capitalize;
+  }
+  &__body {
+    padding: 20px 0;
+    color: $txt-color;
+    font-size: 1rem;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__footer {
+    @include flex(flex-end, center);
+    margin-top: 20px;
+    &__btn + &__btn {
+      margin-left: 20px;
+    }
+    &__btn {
+      padding: 10px 20px;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    &__btn.confirm {
+      background-color: $primary-color;
+    }
+    &__btn.cancel {
+      background-color: $color-danger;
+    }
+
+  }
+
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes growth {
+  from {
+    transform: scale(0.7);
+  }
+  to {
+    transform: scale(1);
+  }
+}

@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import Button,{ButtonCircle} from '../button/Button';
+import { useSelector } from 'react-redux';
 import './pagination.scss'
 
-const Pagination = ({ productsPerPage, totalProducts, onPageChange }) => {
+const Pagination = ({ Pagination, onPageChange, current }) => {
+  const totalProducts = Pagination._totalRows
+  const productsPerPage = Pagination._limit
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
+  const _page = current
+
   const [currentPage, setCurrentPage] = useState(1)
   const [displayPages, setDisplayPage] = useState([])
   
   useEffect(() => {
-    let dotsInit = '...'
-    let dotsLeft = '... '
-    let dotsRight = ' ...'
+    setDisplayPage(pageNumbers)
+    setCurrentPage(_page)
+  },[totalProducts])
+
+  useEffect(() => {
     let tempNumberOfPages = [...pageNumbers]
     if(pageNumbers.length < 6) {
       tempNumberOfPages = pageNumbers
@@ -35,7 +42,7 @@ const Pagination = ({ productsPerPage, totalProducts, onPageChange }) => {
       const sliced = pageNumbers.slice(pageNumbers.length - 4)
       tempNumberOfPages = [1 ,...sliced]
     }
-    
+  
     setDisplayPage(tempNumberOfPages)
   }, [currentPage])
 
@@ -60,7 +67,7 @@ const Pagination = ({ productsPerPage, totalProducts, onPageChange }) => {
         {displayPages.map((number, index) => (
           <li key={index} className='pagination__item'>
             <ButtonCircle 
-              onClick={number === '...' || number === ' ...' || number === '... ' ? null :
+              onClick={number === '...' || number === ' ...' || number === '... ' || currentPage === number ? null :
               () => handlePageChange(number)
                 } 
               className={`pagination__item__link ${currentPage === number && 'active'}`}>

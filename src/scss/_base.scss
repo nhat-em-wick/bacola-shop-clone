@@ -11,6 +11,7 @@
 
 html {
   font-size: 100%;
+  scroll-behavior: smooth;
 
   @include tablet {
     font-size: 90%;
@@ -23,7 +24,7 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  
+  letter-spacing: 0.5px;
 }
 
 a {
@@ -45,3 +46,4 @@ img {
 .app {
   overflow: hidden;
 }
+

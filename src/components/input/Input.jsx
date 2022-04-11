@@ -2,6 +2,7 @@ import React from 'react';
 import './input.scss'
 
 const Input = (props, ref) => {
+
   return (
     <input
       ref={ref}
@@ -12,6 +13,7 @@ const Input = (props, ref) => {
       type={props.type}
       min={props.min ? props.min : null}
       max={props.max ? props.max : null}
+      
     />
   )
 };

@@ -148,16 +148,53 @@
       cursor: pointer;
       border: 1px solid $color-border;
       color: $txt-second-color;
+      position: relative;
 
       @include tablet {
         display: none;
+      }
+
+      &:hover > &__dropdown {
+        display: block;
+      }
+
+      &__dropdown {
+        position: absolute;
+        width: 200px;
+        box-shadow: $box-shadow;
+        padding: 10px;
+        right: 0;
+        top: 50px;
+        border-radius: 10px;
+        background-color: #fff;
+        transform-origin: calc(100% - 10px) top;
+        animation: cartGrowth ease-in .25s;
+        display: none;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 40px;
+          height: 20px;
+          background-color: transparent;
+          top: -15px;right: 0;
+        }
+        &__item {
+          padding: 10px;
+          font-size: 1rem;
+          border-radius: 5px;
+          color: $txt-color;
+          &:hover {
+            background-color: #eee;
+          }
+        }
       }
     }
 
     &-cart {
       position: relative;
 
-      &:hover > &--toggle {
+      &:hover > &__dropdown {
         display: block;
 
         @include tablet {
@@ -184,10 +221,11 @@
           background-color: $color-danger;
           color: $txt-white;
           border-radius: 50%;
+          font-weight: 700;
         }
       }
 
-      &--toggle {
+      &__dropdown {
         position: absolute;
         width: 300px;
         box-shadow: $box-shadow;
@@ -250,6 +288,7 @@
 
         &-item {
           @include flex(flex-start, center);
+          padding: 10px 0;
           border-bottom: 1px solid $color-border;
           position: relative;
           &:last-child{
@@ -257,15 +296,15 @@
           }
 
           &__img {
-            width: 90px;
-            height: 90px;
-            margin-right: 10px;
-            @include flex(center, center);
-            position: relative;
+            border: 1px solid $color-border;
+            img {
+              width: 80px;
+              height: 90px;
+            }
           }
 
           &__info {
-
+            margin-left: 10px;
             &__name {
               font-size: .8rem;
               color: $txt-second-color;
@@ -294,7 +333,7 @@
 
           &--remove {
             position: absolute;
-            top: 10px;
+            top: 5px;
             left: 0px;
             cursor: pointer;
             background-color: $color-danger;
@@ -420,6 +459,13 @@
         margin-top: 40px;
         input {
           font-size: 1.2rem;
+          border: 0;
+            height: 100%;
+            width: 100%;
+            padding: 0 20px;
+            color: $txt-second-color;
+            background-color: $input-bg;
+            border-radius: $border-radius;
         }
       }
 

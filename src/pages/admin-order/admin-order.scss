@@ -1,0 +1,290 @@
+@use "../../scss/" as *;
+
+.admin-order {
+  &__header {
+    @include flex(space-between, center);
+    margin-bottom: 20px;
+    @include mobile {
+      align-items: flex-start;
+      flex-direction: column;
+      .card__header {
+        margin-bottom: 20px;
+      }
+    }
+    &__search {
+      width: 300px;
+      height: 40px;
+      @include mobile {
+        width: 100%;
+      }
+      & > input {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        padding: 0 20px;
+        border-radius: 10px;
+        border: 1px solid $color-border-dark;
+
+        font-size: 1rem;
+        &::placeholder {
+          font-family: Roboto;
+        }
+
+        &:focus {
+          border-color: $second-color;
+        }
+      }
+    }
+  }
+
+  .action {
+    cursor: pointer;
+    color: $primary-color;
+    position: relative;
+    width: max-content;
+    &:hover > span {
+      opacity: 1;
+    }
+    & > i {
+      font-size: 1.5rem;
+    }
+    &>span {
+      position: absolute;
+      padding: 4px 8px;
+      background-color: #F1FAFF;
+      border-radius: 5px;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity .3s ease-in;
+    }
+  }
+}
+
+.admin-view-order {
+  &__header {
+    @include flex(space-between, center);
+    border-bottom: 1px solid $color-border;
+    padding-bottom: 20px;
+    @include mobile {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    &__left {
+      @include mobile {
+        margin-bottom: 20px;
+      }
+      &__time {
+        @include flex(flex-start, center);
+        color: $txt-color;
+        .icon {
+          margin-right: 5px;
+          font-size: 1.5rem;
+        }
+      }
+      &__id {
+        color: $txt-color;
+      }
+    }
+    &__right {
+      color: $txt-color;
+      span {
+        position: relative;
+        & > select {
+          padding: 10px 20px;
+          width: 230px;
+          background-color: #fff;
+          border: 1px solid $color-border-dark;
+          border-radius: 5px;
+          font-size: 1rem;
+          appearance: none;
+          &:focus {
+            outline: none;
+          }
+        }
+        & > .select__arrow {
+          position: absolute;
+
+          pointer-events: none;
+          height: 100%;
+          width: 2rem;
+
+          $size: 0.5rem;
+          right: 0;
+          &::before,
+          &::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          &::before {
+            border-left: $size solid transparent;
+            border-right: $size solid transparent;
+            border-bottom: $size solid #000;
+            top: 75%;
+          }
+
+          &::after {
+            border-left: $size solid transparent;
+            border-right: $size solid transparent;
+            border-top: $size solid #000;
+            top: 140%;
+          }
+        }
+      }
+    }
+  }
+
+  &__body {
+    margin-top: 20px;
+    &__info {
+      display: flex;
+      justify-content: space-between;
+
+      @include tablet {
+        flex-direction: column;
+        align-items: flex-start;
+        &> *~* {
+          margin-top: 20px;
+        }
+      }
+      &__item {
+        flex: 1;
+        display: flex;
+      }
+
+      &__icon {
+        color: $primary-color;
+        @include flex(center, center);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid $primary-color;
+        font-size: 1.5rem;
+      }
+      &__text {
+        width: 250px;
+        margin-left: 20px;
+        color: $txt-color;
+        & > * ~ * {
+          margin-top: 5px;
+        }
+        .title {
+          font-weight: 500;
+        }
+        & > div {
+          
+          overflow: hidden;
+          display: block;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+      }
+    }
+
+    &__table {
+      margin-top: 20px;
+      table {
+        .product-img {
+          width: 80px;
+        }
+        .product-name {
+          overflow: hidden;
+        display: block;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        }
+      }
+    }
+    &__checkout {
+      margin-top: 20px;
+      
+      & > div:first-child {
+        margin-left: auto;
+        width: 500px;
+        padding: 20px;
+        border: 1px solid $color-border;
+        border-radius: 10px;
+        @include tablet {
+        width: 100%;
+      }
+      }
+      
+      &__btn {
+        cursor: pointer;
+        text-align: center;
+        background-color: $primary-color;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        &.disabled {
+          background-color: rgb(223, 223, 223);
+          pointer-events: none;
+        }
+        &:hover {
+          opacity: .9;
+        }
+      }
+      &__item {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > span:last-child {
+          position: relative;
+
+          & > select {
+            padding: 10px 20px;
+            width: 170px;
+            background-color: #fff;
+            border: 1px solid $color-border-dark;
+            border-radius: 5px;
+            font-size: 1rem;
+            appearance: none;
+            &:focus {
+              outline: none;
+            }
+          }
+
+          & > .select__arrow {
+            position: absolute;
+            pointer-events: none;
+            height: 100%;
+            width: 2rem;
+            $size: 0.5rem;
+            right: 0;
+            &::before,
+            &::after {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+            &::before {
+              border-left: $size solid transparent;
+              border-right: $size solid transparent;
+              border-bottom: $size solid #000;
+              top: 35%;
+            }
+
+            &::after {
+              border-left: $size solid transparent;
+              border-right: $size solid transparent;
+              border-top: $size solid #000;
+              top: 65%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

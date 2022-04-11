@@ -1,0 +1,126 @@
+@use "../../scss/" as *;
+
+.checkout {
+  @include tablet {
+    &__biling-detail {
+      margin-bottom: 20px;
+    }
+  }
+  &__biling-detail__title,
+  &__order__title {
+    font-size: 1.4rem;
+    color: $txt-color;
+  }
+  &__order {
+    &__info {
+      border: 3px solid $primary-color;
+      padding: 20px 30px;
+      margin-top: 30px;
+      border-radius: 10px;
+      &__cart-items {
+        &__header,
+        &__item,
+        &__provisional,
+        &__total-price,
+        &__ship {
+          @include flex(space-between, center);
+          padding: 20px 0;
+          border-bottom: 1px solid $color-border-dark;
+          color: $txt-color;
+        }
+
+        &__header {
+          .title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: $txt-color;
+          }
+        }
+
+        &__list {
+          max-height: 300px;
+          overflow-y: scroll;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          /* Track */
+          &::-webkit-scrollbar {
+            height: 6px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: transparent;
+            cursor: pointer;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 20px;
+          }
+
+          &::-webkit-scrollbar-thumb:horizontal:hover,
+          &::-webkit-scrollbar-thumb:vertical:hover {
+            background: $color-border-dark;
+          }
+        }
+
+        &__item > div:first-child {
+          width: 60%;
+          .name {
+            overflow: hidden;
+            display: block;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+          }
+        }
+        &__ship {
+          .ship {
+            @include flex(flex-start, flex-end);
+            flex-direction: column;
+
+            & > * ~ * {
+              margin-top: 10px;
+            }
+          }
+        }
+
+        &__total-price {
+          .price {
+            color: $color-price;
+            font-size: 1.2rem;
+            font-weight: 500;
+          }
+        }
+      }
+
+      &__method {
+        .title {
+          margin: 20px 0;
+        }
+        .method > * ~ * {
+          margin-top: 10px;
+        }
+      }
+
+      &__btn {
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background-color: $color-danger;
+        color: #fff;
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+}

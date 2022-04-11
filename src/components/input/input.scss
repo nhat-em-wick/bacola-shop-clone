@@ -1,13 +1,3 @@
-@use '../../scss/' as *;
-input[type="text"] {
-  border: 0;
-  height: 100%;
-  width: 100%;
-  padding: 0 20px;
-  color: $txt-second-color;
-  background-color: $input-bg;
-  border-radius: $border-radius;
-}
 
 input:focus {
   outline: none;

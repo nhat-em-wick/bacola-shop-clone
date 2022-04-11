@@ -1,0 +1,58 @@
+@use '../../scss/' as *;
+
+.profile {
+
+  &__title {
+    font-size: 1.3rem;
+    color: $txt-color;
+    font-weight: 500;
+  }
+
+  &__info, &__password {
+    padding: 0 30px;
+  }
+
+  &__info{
+    position: relative;
+    @include mobile {
+      margin-bottom: 30px;
+    }
+    &__btn {
+      margin-top: 30px;
+      padding: 10px 30px;
+      background-color: $primary-color;
+      color: #fff;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        opacity: .9;
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 1px;
+      background-color: $color-border-dark;
+      right: -15px;top: 0;
+    }
+  }
+
+  &__password {
+
+    &__btn {
+      margin-top: 30px;
+      padding: 10px 30px;
+      background-color: $color-danger;
+      color: #fff;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        opacity: .9;
+      }
+    }
+  }
+
+}

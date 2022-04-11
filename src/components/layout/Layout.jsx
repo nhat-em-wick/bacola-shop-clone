@@ -3,8 +3,10 @@ import { Outlet, useLocation} from "react-router-dom";
 
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import Loading from "../loading/Loading";
+
 import ProductViewModal from "../product-view-modal/ProductViewModal";
+import Dialog from "../dialog/Dialog";
+import { ButtonGoToTop } from "../scroll-to-top/ScrollToTop";
 import "./layout.scss";
 const Layout = () => {
 
@@ -23,7 +25,9 @@ const Layout = () => {
           </div>
           <Footer />
           <ProductViewModal />
+          
       </div>
+        <ButtonGoToTop/>
     </>
   );
 };

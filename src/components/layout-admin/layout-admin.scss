@@ -1,0 +1,64 @@
+@use '../../scss/' as *;
+
+
+.admin {
+  background-color: $second-bg;
+  overflow: hidden;
+  &__main {
+    padding-left: 330px;
+    min-height: 100vh;
+    padding-right: 30px;
+
+    @include tablet {
+      width: 100%;
+      padding: 0 24px;
+    }
+    
+    @include mobile {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+  &__content {
+    $padding-top: 100px;
+    padding-top: $padding-top;
+
+    @include tablet {
+      padding-top: calc($padding-top - 20px);
+    }
+  }
+}
+
+.card {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 30px;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+  @include mobile {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  &__header {
+    text-transform: capitalize;
+    color: $txt-color;
+  }
+
+  &__header ~ &__body {
+    margin-top: 20px;
+  }
+  &__footer {
+    margin-top: 20px;
+    
+    text-transform: capitalize;
+    &>a{
+      width: fit-content;
+      margin: auto;
+    }
+    &>a:hover{
+      color:$primary-color;
+    }
+  }
+}

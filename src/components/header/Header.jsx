@@ -1,75 +1,63 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Overlay from "../overlay/Overlay";
 import Input from "../input/Input";
 import Button, { ButtonCircle } from "../button/Button";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  updateCart,
+  removeItem,
+} from "../../redux/shopping-cart/cartItemsSlice";
+
+import { updateFilters } from "../../redux/filters/filtersSlice";
 
 import "./header.scss";
 import logo from "../../assets/images/bacola-logo.png";
 import productImg from "../../assets/images/productjpg";
 import cartEmpty from "../../assets/images/cart-empty.png";
+
+import { logoutUser } from "../../redux/auth/apiRequest";
+import { menuBacola, menuMobileBacola } from "../../constant/index";
 import shopApi from "../../api/shopApi";
-const menu = [
-  {
-    display: "Trang chủ",
-    path: "/",
-  },
-  {
-    display: "Cửa hàng",
-    path: "shop",
-  },
-];
-
-const menuMobile = [
-  {
-    display: "Trang chủ",
-    path: "/",
-  },
-  {
-    display: "Cửa hàng",
-    path: "shop",
-  },
-
-  {
-    display: "Login",
-    path: "login",
-  },
-  {
-    display: "Register",
-    path: "register",
-  },
-];
 
 const Header = () => {
+  const q = useSelector((state) => state.filters.values?.q);
+
   const location = useLocation();
+  const [shrink, setShrink] = useState(false);
   const [activeLink, setActiveLink] = useState(0);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const [valueSearch, setValueSearch] = useState(q);
+  const navigate = useNavigate();
 
-  const headerRef = useRef(null);
   const inputSearchRef = useRef(null);
+  const inputSearchMobile = useRef("");
+  const typingTimoutRef = useRef(null)
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const currPath = window.location.pathname.split("/")[1];
-    const activeItem = menu.findIndex((e) => e.path === currPath);
+    const activeItem = menuBacola.findIndex((e) => e.path === currPath);
     setActiveLink(currPath.length === 0 ? 0 : activeItem);
   }, [location]);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    const headerShirk = () => {
       if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
+        document.body.scrollTop > 40 ||
+        document.documentElement.scrollTop > 40
       ) {
-        headerRef.current.classList.add("shrink");
+        setShrink(true);
       } else {
-        headerRef.current.classList.remove("shrink");
+        setShrink(false);
       }
-    });
+    };
+    window.addEventListener("scroll", headerShirk);
     return () => {
-      window.removeEventListener("scroll");
+      window.removeEventListener("scroll", headerShirk);
     };
   }, []);
 
@@ -77,52 +65,52 @@ const Header = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
+  
+
   const handleOpenSearch = () => {
     inputSearchRef.current.focus();
     setOpenSearch(!openSearch);
   };
 
-  const cartItems = useSelector((state) => state.cartItems.value);
-  const [totalProduct, setTotalProduct] = useState(0);
-  const [cartProducts, setCartProducts] = useState([]);
+
+
+  const handleValueSearch = (e) => {
+    const value = e.target.value
+    setValueSearch(value);
+    if(typingTimoutRef.current) {
+       clearTimeout(typingTimoutRef.current)
+    }
+    typingTimoutRef.current = setTimeout(() => {
+      dispatch(updateFilters({ q: value }));
+    }, 500)
+    navigate('/shop')
+  };
+
+  const cartItems = useSelector((state) => state.cartItems.values.items);
+
+  const totalProduct = useSelector(
+    (state) => state.cartItems.values.totalProduct
+  );
+
+  const [cartProducts, setCartProducts] = useState(cartItems);
+
   useEffect(() => {
-    const productIds = {
-      id: [],
-    };
-    cartItems.forEach((item) => {
-      productIds.id.push(item.id);
-    });
-    const fetchCartProduct = async () => {
-      const res = [];
-      if (cartItems.length > 0) {
-        try {
-          const products = await shopApi.getProductList(productIds);
-          cartItems.forEach((item) => {
-            let result = products.find((el) => el.id === item.id);
-            res.push({
-              ...item,
-              product: result,
-            });
-          });
-          setCartProducts(res);
-          setTotalProduct(
-            cartItems.reduce((total, item) => total + Number(item.quantity), 0)
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        setCartProducts([]);
-        setTotalProduct(0);
-      }
-    };
-    fetchCartProduct();
+    setCartProducts(cartItems);
   }, [cartItems]);
 
+  const removeCartItem = (item) => {
+    dispatch(removeItem(item));
+  };
+
+  const currentUser = useSelector((state) => state.auth.login?.currentUser);
+
+  const handleLogout = () => {
+    logoutUser(dispatch, navigate);
+  };
 
   return (
     <>
-      <header ref={headerRef} className="header">
+      <header className={`header ${shrink && "shrink"}`}>
         <div className="grid wide">
           <div className="navbar">
             <div className="navbar__mobile-btn" onClick={handleOpenMenuMobile}>
@@ -137,10 +125,16 @@ const Header = () => {
                   <i className="bx bx-x"></i>
                 </div>
                 <div className="navbar__mobile-toggle__search">
-                  <Input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                  <Input
+                    ref={inputSearchMobile}
+                    value={valueSearch}
+                    type="text"
+                    placeholder="Tìm kiếm sản phẩm..."
+                    onChange={handleValueSearch}
+                  />
                 </div>
                 <ul className="navbar__mobile-toggle__list">
-                  {menuMobile.map((item, index) => (
+                  {menuMobileBacola.map((item, index) => (
                     <li
                       key={index}
                       className={`navbar__mobile-toggle__list-item 
@@ -149,15 +143,35 @@ const Header = () => {
                       <Link to={item.path}>{item.display}</Link>
                     </li>
                   ))}
+                  {currentUser ? (
+                    <>
+                      
+                      <li className={`navbar__mobile-toggle__list-item`}>
+                        <Link to="my-account">Tài khoản</Link>
+                      </li>
+                      <li className={`navbar__mobile-toggle__list-item`}>
+                        <div onClick={() => handleLogout()}>Đăng xuất</div>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className={`navbar__mobile-toggle__list-item`}>
+                        <Link to="login">Đăng nhập</Link>
+                      </li>
+                      <li className={`navbar__mobile-toggle__list-item`}>
+                        <Link to="register">Đăng kí</Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
-            <div className="navbar__logo">
+            <Link to="/" className="navbar__logo">
               <img src={logo} alt="" />
-            </div>
+            </Link>
             <div className="navbar__menu">
               <div className="navbar__menu-list">
-                {menu.map((item, index) => (
+                {menuBacola.map((item, index) => (
                   <Link
                     key={index}
                     className={`navbar__menu-list__item ${
@@ -189,32 +203,85 @@ const Header = () => {
                     ref={inputSearchRef}
                     type="search"
                     placeholder="Tìm kiếm sản phẩm..."
+                    onChange={handleValueSearch}
+                    value={valueSearch}
                   />
                 </div>
               </div>
-              <ButtonCircle>
-                <i className="bx bx-user"></i>
-              </ButtonCircle>
+              <div className="navbar__right-user">
+                <ButtonCircle>
+                  <i className="bx bx-user"></i>
+                </ButtonCircle>
+                {
+                  <div className="navbar__right-user__dropdown">
+                    {currentUser ? (
+                      <>
+                        <Link
+                          to="/my-account"
+                          className="navbar__right-user__dropdown__item"
+                        >
+                          Hi, {currentUser.name}
+                        </Link>
+                        {currentUser.admin === true && (
+                          <Link
+                            to="/admin/dashboard"
+                            className="navbar__right-user__dropdown__item"
+                          >
+                            Dashboard
+                          </Link>
+                        )}
+                        <div
+                          onClick={() => handleLogout()}
+                          className="navbar__right-user__dropdown__item"
+                        >
+                          Đăng xuất
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/login"
+                          className="navbar__right-user__dropdown__item"
+                        >
+                          Đăng nhập
+                        </Link>
+                        <Link
+                          to="/register"
+                          className="navbar__right-user__dropdown__item"
+                        >
+                          Đăng kí
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                }
+              </div>
               <div className="navbar__right-cart">
                 <Link to="/cart" className="navbar__right-cart__btn">
                   <i className="bx bx-cart"></i>
                   <span>{totalProduct}</span>
                 </Link>
 
-                <div className="navbar__right-cart--toggle">
-                  {cartProducts.length === 0 && <div className="navbar__right-cart__empty">
-                    <div className="navbar__right-cart__empty__img">
-                      <img src={cartEmpty} alt="" />
+                <div className="navbar__right-cart__dropdown">
+                  {cartProducts.length === 0 && (
+                    <div className="navbar__right-cart__empty">
+                      <div className="navbar__right-cart__empty__img">
+                        <img src={cartEmpty} alt="" />
+                      </div>
+                      <div className="navbar__right-cart__empty__text">
+                        Chưa có sản phẩm nào!
+                      </div>
                     </div>
-                    <div className="navbar__right-cart__empty__text">
-                      Chưa có sản phẩm nào!
-                    </div>
-                  </div>}
+                  )}
                   {cartProducts.length > 0 && (
                     <>
                       <div className="navbar__right-cart__list">
                         {cartProducts.map((item, index) => (
-                          <CartItem key={index} item={item} />
+                          <CartItem
+                            key={index}
+                            item={item}
+                            onClick={() => removeCartItem(item)}
+                          />
                         ))}
                       </div>
                       <div className="navbar__right-cart__action">
@@ -225,7 +292,7 @@ const Header = () => {
                           Xem giỏ hàng
                         </Link>
                         <Link
-                          to="#"
+                          to="/checkout"
                           className="navbar__right-cart__action__checkout"
                         >
                           Thanh toán
@@ -244,28 +311,34 @@ const Header = () => {
   );
 };
 
-const CartItem = ({ item }) => (
-  <div className="navbar__right-cart__list-item">
-    <span className="navbar__right-cart__list-item--remove">
-      <i className="bx bx-x"></i>
-    </span>
-    <Link to="#" className="navbar__right-cart__list-item__img">
-      <img src={item.product.img1} alt="" />
-    </Link>
-    <div className="navbar__right-cart__list-item__info">
-      <Link
-        to={`/shop/${item.id}`}
-        className="navbar__right-cart__list-item__info__name"
+const CartItem = (props) => {
+  const item = props.item;
+  return (
+    <div className="navbar__right-cart__list-item">
+      <span
+        className="navbar__right-cart__list-item--remove"
+        onClick={props.onClick ? props.onClick : null}
       >
-        {item.product.name}
-      </Link>
-      <div className="navbar__right-cart__list-item__info__price">
-        <span className="quantity">{item.quantity}</span>
         <i className="bx bx-x"></i>
-        <span className="price">{item.price}</span>
+      </span>
+      <div className="navbar__right-cart__list-item__img">
+        <img src={item.img} alt="" />
+      </div>
+      <div className="navbar__right-cart__list-item__info">
+        <Link
+          to={`/shop/${item.slug}`}
+          className="navbar__right-cart__list-item__info__name"
+        >
+          {item.name}
+        </Link>
+        <div className="navbar__right-cart__list-item__info__price">
+          <span className="quantity">{item.quantity}</span>
+          <i className="bx bx-x"></i>
+          <span className="price">{item.price}</span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Header;

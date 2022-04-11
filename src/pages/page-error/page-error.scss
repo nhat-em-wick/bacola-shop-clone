@@ -1,0 +1,105 @@
+@use '../../scss/' as *;
+
+.page-error {
+  text-align: center;
+
+  &__gear{
+    width: 280px;
+    height: 200px;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    margin: auto;
+    display: flex;
+    
+    & div {
+      box-sizing: content-box;
+    }
+
+    & > div:nth-child(1) {
+      width: 100%;
+      height: 100%;
+      animation: gear1 3s infinite linear;
+      & div:nth-child(2){
+        transform: translate(-50%, -50%) rotate(15deg);
+      }
+      & div:nth-child(3){
+        transform: translate(-50%, -50%) rotate(60deg);
+      }
+      & div:nth-child(4){
+        transform: translate(-50%, -50%) rotate(105deg);
+      }
+      & div:nth-child(5) {
+        transform: translate(-50%, -50%) rotate(150deg);
+      }
+
+    }
+    & > div:nth-child(2) {
+      width: 100%;
+      height: 100%;
+      animation: gear2 3s infinite linear;
+     
+      & div:nth-child(3){
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      & div:nth-child(4){
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+      & div:nth-child(5) {
+        transform: translate(-50%, -50%) rotate(135deg);
+      }
+    }
+
+    &>div div {
+      position: absolute;
+      width: 22px;
+      height: 152px;
+      background-color: $second-color;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &>div div:nth-child(1){
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+
+    &>div div:nth-child(6) {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+
+  }
+
+  &__notify {
+    color: $txt-color;
+    font-weight: 500;
+  }
+  &__btn {
+    margin-top: 30px;
+  }
+}
+
+@keyframes gear1 {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes gear2 {
+  0% {
+      transform: rotate(360deg);
+  }
+
+  100% {
+      transform: rotate(0deg);
+  }
+}

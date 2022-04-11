@@ -11,17 +11,17 @@ import shopApi from '../../api/shopApi';
 const ProductViewModal = () => {
 
   const [product, setProduct] = useState(undefined)
-  const productId = useSelector(state => state.productModal.value)
+  const productSlug = useSelector(state => state.productModal.value)
+
   const dispatch = useDispatch()
   
   useEffect(() => {
     const fetchProduct = async () => {
-      if(productId !== null) {
+      if(productSlug !== null) {
         try {
-          const response = await shopApi.getProduct(productId)
+          const response = await shopApi.getProduct(productSlug)
           setProduct(response)
         } catch (error) {
-          
           console.log(error)
         }
       }else {
@@ -29,7 +29,7 @@ const ProductViewModal = () => {
       }
     }
     fetchProduct()
-  },[productId])
+  },[productSlug])
 
   const {pathname} = useLocation()
 

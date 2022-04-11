@@ -1,0 +1,135 @@
+@use '../../scss/' as *;
+
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: $box-shadow;
+  background-color: #fff;
+
+  @include tablet {
+    display: none;
+  }
+
+  &__logo {
+    width: 150px;
+    margin: 30px auto;
+  }
+
+  &__item {
+    padding: 0 20px;
+
+    &-inner {
+      padding: 15px 25px;
+      @include flex(flex-start, center);
+      transition: color .3s ease;
+      font-weight: 500;
+      color: $txt-color;
+      &>i {
+        margin-right: 10px;
+
+        font-size: 1.5rem;
+      }
+      &>span {
+        text-transform: capitalize;
+        
+      }
+
+      &:hover {
+        color: $second-color;
+      }
+
+      &.active {
+        border-radius: 10px;
+        background-image: linear-gradient(to right,#349eff, $second-color  );
+        color: #fff;
+      }
+    }
+  }
+
+  &-mobile {
+    position: fixed;
+    height: 100vh;
+    width: 300px;
+    background-color: #fff;
+    z-index: 99;
+    box-shadow: $box-shadow;
+    transform: translateX(-100%);
+    transition: transform .5s ease-in-out;
+    @include mobile {
+      display: none;
+    }
+    &.active {
+      transform: translateX(0);
+    }
+    &__logo {
+      width: 200px;
+      margin: 30px auto;
+    }
+  }
+  
+}
+
+.menu-bottom {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: none;
+  z-index: 100;
+  @include mobile {
+    display: block;
+  }
+  &--toggle {
+    width: 100%;
+    height: 30px;
+    background-color: #fff;
+    font-size: 1.5rem;
+    @include flex(center, center);
+    color: $txt-color;
+    box-shadow: $box-shadow;
+  }
+
+  &__list {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    flex-wrap: wrap;
+    transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 100;
+    & > a {
+      flex: 1 0 33.33%;
+    }
+
+    &.active {
+      transform: translateY(calc(-100% - 35px));
+    }
+  }
+
+  &__item {
+    padding: 10px;
+    &-inner {
+      @include flex(center, center);
+      flex-direction: column;
+      color: $txt-color;
+      &>i{
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      &>span {
+        font-size: 1rem;
+      }
+      &.active {
+        color: $second-color;
+      }
+
+    }
+  }
+
+ 
+  
+}

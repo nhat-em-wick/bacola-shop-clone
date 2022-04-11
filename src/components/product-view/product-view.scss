@@ -8,12 +8,14 @@
 
   &__img__list {
     img {
+      border: 1px solid $color-border;
       cursor: pointer;
       margin-bottom: 10px;
     }
   }
   &__img__main {
     img {
+      border: 1px solid $color-border;
     }
   }
 

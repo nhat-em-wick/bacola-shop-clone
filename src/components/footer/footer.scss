@@ -30,27 +30,29 @@
       & > * ~ *{
         margin-top: 10px;
       }
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: $txt-color;
     }
 
     &__link {
       color: $txt-second-color;
       transition: .3s ease;
-      @include mobile {
-        font-size: 1.2rem;
-      }
+      
       &:hover {
         color: $second-color;
       }
     }
 
     &__app {
-      & > * ~ * {
-        margin-top: 10px;
+      @include mobile {
+        margin: auto;
       }
-      img {
-        width: 40%;
+      &__img {
+        width: 120px;
+        margin-bottom: 10px;
         @include mobile {
-          width: 30%;
+          margin: auto;
         }
       }
     }
@@ -155,7 +157,7 @@
         height: 15px;
         width: 15px;
         background-color: #fff;
-        bottom: -8px;
+        bottom: -6px;
         left: 50%;
         transform: translateX(-50%) rotate(45deg);
       transition: all .4s cubic-bezier(0.68, -0.55,0.265, 1.55);
