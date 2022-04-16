@@ -45,7 +45,7 @@ export const ship_method = [
 export const accordion = [
   {
     title: 'Trang web sử dụng công nghệ gì?',
-    content: `Front-End: SCSS, ReactJS, React Hook, Redux Toolkit, Cloudinary. Back-End: Nodejs, ExpressJS, MongoDB, Gmail`
+    content: `Front-End: SCSS, ReactJS, Redux Toolkit, Cloudinary. Back-End: ExpressJS, MongoDB, Gmail`
   },
   {
     title: 'Những chức năng trong trang web',

@@ -28,7 +28,7 @@ const ProductView = (props) => {
   const trackingRef = useRef();
 
   trackingRef.current = (item) => {
-    let flag = true
+    let flag = true;
     const result =
       cartItems.length > 0 &&
       cartItems.filter((item1) => item1.productId === item._id);
@@ -48,18 +48,18 @@ const ProductView = (props) => {
             price: item.new_price,
             img: item.gallery[0],
             name: item.name,
-            slug: item.slug
+            slug: item.slug,
           })
         );
-        flag = true
+        flag = true;
       } catch (error) {
         console.log(error);
         notifyError(error.response.data.message);
-        flag = false
+        flag = false;
       }
     };
     tracking();
-    return flag
+    return flag;
   };
 
   const updateQuantity = (type) => {
@@ -78,11 +78,11 @@ const ProductView = (props) => {
   };
 
   const goToCheckout = () => {
-    const tracking =  trackingRef.current(product);
-    if(tracking) {
+    const tracking = trackingRef.current(product);
+    if (tracking) {
       navigate("/checkout");
-    }else {
-      return
+    } else {
+      return;
     }
   };
 
@@ -90,30 +90,21 @@ const ProductView = (props) => {
     <>
       <div className="product-view">
         <div className="row">
-          <div className="col l-6 m-12">
+          <div className="col l-6 m-12 c-12">
             <div className="product-view__img-wrapper">
-              <div className="row">
-                <div className="col l-3 m-3 c-3">
-                  <div className="product-view__img__list">
+              <div className="product-view__img__list">
+                {product.gallery.map((item, index) => (
+                  <div className={`product-view__img__list__item ${item === previewImg && 'active'}`}>
                     <img
-                      src={product.gallery[0]}
+                      src={item}
                       alt=""
-                      onClick={() => setPreviewImg(product.gallery[0])}
+                      onClick={() => setPreviewImg(item)}
                     />
-                    {product.gallery[1] && (
-                      <img
-                        src={product.gallery[1]}
-                        alt=""
-                        onClick={() => setPreviewImg(product.gallery[1])}
-                      />
-                    )}
                   </div>
-                </div>
-                <div className="col l-9 m-9 c-9">
-                  <div className="product-view__img__main">
-                    <img src={previewImg || product.gallery[0]} alt="" />
-                  </div>
-                </div>
+                ))}
+              </div>
+              <div className="product-view__img__main">
+                <img src={previewImg || product.gallery[0]} alt="" />
               </div>
             </div>
           </div>

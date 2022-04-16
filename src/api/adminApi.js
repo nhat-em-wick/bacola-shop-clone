@@ -21,9 +21,9 @@ const adminApi = {
     const url = '/users'
     return axiosClient.get(url, {params})
   },
-  getInfoUser: (params) => {
-    const url = '/users/info'
-    return axiosClient.get(url, {params})
+  getInfoUser: (id) => {
+    const url = '/users/'+ id
+    return axiosClient.get(url)
   },
   
   addUser: (params) => {
@@ -31,7 +31,7 @@ const adminApi = {
     return axiosClient.post(url, params)
   },
   putUser: (id,params) => {
-    const url = '/users/edit?id=' + id
+    const url = '/users/' + id
     return axiosClient.put(url, params)
   },
   deleteUsers: (params) => {
@@ -43,7 +43,7 @@ const adminApi = {
     return axiosClient.get(url, {params})
   },
   getOrder: (id,params) => {
-    const url = `orders/customer/${id}`
+    const url = `orders/${id}`
     return axiosClient.get(url, params)
   },
   putOrder: (id, params) => {

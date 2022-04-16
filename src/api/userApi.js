@@ -2,7 +2,7 @@ import axiosClient from './axiosClient'
 
 const userApi = {
   getInfoUser: (id) => {
-    const url = `users/${id}`
+    const url = `users/info`
     return axiosClient.get(url)
   },
   postOrder: (params) => {
@@ -22,7 +22,7 @@ const userApi = {
     return axiosClient.put(url, params)
   },
   changeInfo: (id, params) => {
-    const url ='users/' + id
+    const url ='users/info'
     return axiosClient.put(url, params)
   },
   changePassword: (params) => {

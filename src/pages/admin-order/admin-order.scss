@@ -82,6 +82,7 @@
         .icon {
           margin-right: 5px;
           font-size: 1.5rem;
+          flex-shrink: 0;
         }
       }
       &__id {
@@ -166,9 +167,10 @@
         border-radius: 50%;
         border: 1px solid $primary-color;
         font-size: 1.5rem;
+        flex-shrink: 0;
       }
       &__text {
-        width: 250px;
+        flex: 1;
         margin-left: 20px;
         color: $txt-color;
         & > * ~ * {

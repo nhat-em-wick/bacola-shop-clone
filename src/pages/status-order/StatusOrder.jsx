@@ -19,8 +19,7 @@ const StatusOrder = () => {
     const fetchOrder = async () => {
       try {
         const res = await userApi.getOrderUser(params.orderId)
-        setOrder(res[0])
-     
+        setOrder(res.order)
       } catch (error) {
         console.log(error)
         notifyError(error.response.data.message);

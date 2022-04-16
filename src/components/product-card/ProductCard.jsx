@@ -70,12 +70,15 @@ const ProductCard = (props) => {
       </div>
       <div className="product-card__action">
         <div className="product-card__action__quick-view">
-          <ButtonCircle onClick={() => dispatch(set(product.slug))}>
+          <ButtonCircle
+            title="Quick view"
+            onClick={() => dispatch(set(product.slug))}
+          >
             <i className="bx bx-expand"></i>
           </ButtonCircle>
         </div>
         <div className="product-card__action__heart">
-          <ButtonCircle boxShadow={true}>
+          <ButtonCircle title="Add to wishlist" boxShadow={true}>
             <i className="bx bx-heart"></i>
           </ButtonCircle>
         </div>
@@ -91,51 +94,57 @@ const ProductCard = (props) => {
         </div>
       </Link>
       <div className="product-card__info">
-        <Link to={`/shop/${product.slug}`}>
-          <div className="product-card__info__name">{product.name}</div>
-        </Link>
-        <div className="product-card__info__stock">
-          Còn {product.stock} sản phẩm
-        </div>
-        <div className="product-card__info__rating">
-          <div className="product-card__info__star-outer">
-            <div
-              className="product-card__info__star-inner"
-              style={{ width: `${(starYellow / 5) * 100}%` }}
-            ></div>
+        <div className="product-card__info__body">
+          <div className="product-card__info__title">
+            <Link to={`/shop/${product.slug}`}>
+              <div className="product-card__info__name">{product.name}</div>
+            </Link>
           </div>
-          <span className="number-rating">{product.rating}</span>
+          <div className="product-card__info__content">
+              <div className="product-card__info__stock">
+              Còn {product.stock} sản phẩm
+            </div>
+            <div className="product-card__info__rating">
+              <div className="product-card__info__star-outer">
+                <div
+                  className="product-card__info__star-inner"
+                  style={{ width: `${(starYellow / 5) * 100}%` }}
+                ></div>
+              </div>
+              <span className="number-rating">{product.rating}</span>
+            </div>
+            <div className="product-card__info__price">
+              {product.old_price && (
+                <span className="product-card__info__old-price">
+                  {formatMoneyVND(product.old_price)}
+                </span>
+              )}
+              <span className="product-card__info__new-price">
+                {formatMoneyVND(product.new_price)}
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="product-card__info__price">
-          {product.old_price && (
-            <span className="product-card__info__old-price">
-              {formatMoneyVND(product.old_price)}
-            </span>
+        <div className="product-card__info__footer">
+          {product.stock <= 0 ? <>
+            <div className="product-card__empty">
+              Sản phẩm đã hết
+            </div>
+          </> : (
+            <div className="product-card__addtocart">
+              <Button
+                size={props.btn.size ? props.btn.size : "primary"}
+                width={props.btn.width ? props.btn.width : "primary"}
+                bg={props.btn.bg ? props.btn.bg : "primary"}
+                color={props.btn.color ? props.btn.color : ""}
+                onClick={() => addToCart(product)}
+              >
+                Thêm vào giỏ hàng
+              </Button>
+            </div>
           )}
-
-          <span className="product-card__info__new-price">
-            {formatMoneyVND(product.new_price)}
-          </span>
         </div>
-        {product.stock <= 0 ? null : (
-          <div className="product-card__addtocart">
-            <Button
-              size={props.btn.size ? props.btn.size : "primary"}
-              width={props.btn.width ? props.btn.width : "primary"}
-              bg={props.btn.bg ? props.btn.bg : "primary"}
-              color={props.btn.color ? props.btn.color : ""}
-              onClick={() => addToCart(product)}
-            >
-              Thêm vào giỏ hàng
-            </Button>
-          </div>
-        )}
       </div>
-      {type === "fadein" ? (
-        <div className="product-card__animate-fadein"></div>
-      ) : (
-        ""
-      )}
     </div>
   );
 };

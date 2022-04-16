@@ -27,8 +27,10 @@ export const ButtonCircle = (props) => {
   const bg = props.bg ? props.bg : "white";
   const boxShadow = props.boxShadow ? true : false;
   const className = props.className ? props.className : "";
+  const title = props.title ? props.title : ''
   return (
     <div
+      title={title}
       className={`btn-circle btn-circle--size-${size} btn-circle--color-${color}  btn-circle--bg-${bg} ${
         boxShadow && "btn-circle--box-shadow"
       } ${className}`}

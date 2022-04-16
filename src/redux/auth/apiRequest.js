@@ -47,10 +47,10 @@ export const registerUser = async (user, dispatch, navigate) => {
     console.log(error)
     dispatch(registerFailed());
     notifyError(
-      error.response.data.message ||
-        error.response.data.email ||
-        error.response.data.name ||
-        error.response.data.password
+      error.response.data.errors.message ||
+        error.response.data.errors.email ||
+        error.response.data.errors.name ||
+        error.response.data.errors.password
     );
     
   }

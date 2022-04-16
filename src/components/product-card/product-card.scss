@@ -6,7 +6,8 @@
   transition: box-shadow .3s linear;
   position: relative;
   height: 100%;
-  
+  display: flex;
+  flex-direction: column;
   &:hover {
     box-shadow: $box-shadow;
     border: 1px solid $color-border-dark;
@@ -56,12 +57,12 @@
     overflow: hidden;
     position: relative;
     padding-top: 100%;
+    flex-shrink: 0;
     img {
       position: absolute;
       top: 0;
-      // left: 50%;
-      // transform: translateX(-50%);
       height: 100%;
+      object-fit: cover;
 
       &:nth-child(1) {
         transform: scale(1);
@@ -70,10 +71,7 @@
 
       &:nth-child(2) {
         transform: scale(0);
-        // transition: transform .5s ease;
       }
-
-      
     }
   }
 
@@ -91,6 +89,22 @@
   &__info {
     position: relative;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    &__body {
+      flex: 1;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    &__content {
+      margin-top: auto;
+    }
+    &__footer {
+      margin-top: 20px;
+    }
     &__name {
       font-size: 1rem;
       font-weight: 500;
@@ -164,43 +178,16 @@
     }
 
   }
-  &__addtocart {
-    margin-top: 20px;
-    
+  &__empty {
+    text-align: center;
+    padding: .75rem 0;
+    font-size: .95rem;
+    text-transform: capitalize;
+    color: $color-danger;
   }
 }
 
-.product-card-fadein{
-  &:hover {
-    box-shadow: $box-shadow;
-    border: 1px solid $second-color;
-    height: calc(100% + 50px);
-    z-index: 10;
-    background-color: #fff;
-  }
 
-  &:hover .product-card__addtocart {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  .product-card__addtocart{
-    position: relative;
-    width: 100%;
-    bottom: -40%;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity .4s ease;
-
-    button {
-      position: absolute;
-      bottom: -50px;
-      left: 0;
-
-    }
-  }
-  
-}
 
 
 @keyframes zoomIn {

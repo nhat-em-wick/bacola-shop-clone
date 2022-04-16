@@ -17,16 +17,16 @@ import userApi from "../../api/userApi";
 import "./admin-user.scss";
 import Checkbox from "../../components/checkbox/Checkbox";
 
-const EditUser = props => {
-  const params = useParams()
-  const [isAdmin, setIsAdmin] = useState(false)
+const EditUser = (props) => {
+  const params = useParams();
+  const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-  })
-  const navigate = useNavigate()
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -37,8 +37,13 @@ const EditUser = props => {
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
-      name: Yup.string().required("Bắt buộc").min(3, "Tối thiểu 3 kí tự").matches(/[a-zA-Z-_ ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/
-        , "Không chứa ký tự dặc biệt"),
+      name: Yup.string()
+        .required("Bắt buộc")
+        .min(3, "Tối thiểu 3 kí tự")
+        .matches(
+          /[a-zA-Z-_ ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/,
+          "Không chứa ký tự dặc biệt"
+        ),
       email: Yup.string()
         .required("Bắt buộc")
         .matches(
@@ -46,57 +51,55 @@ const EditUser = props => {
           "Email không hợp lệ"
         ),
       address: Yup.string(),
-      phone: Yup.string().matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "SĐT không hợp lệ"),
+      phone: Yup.string().matches(
+        /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+        "SĐT không hợp lệ"
+      ),
     }),
     onSubmit: (values) => {
       const editUser = {
         name: values.name,
         phone: values.phone,
         email: values.email,
-        isAdmin: isAdmin
-      }
+        isAdmin: isAdmin,
+      };
       const putUser = async () => {
         try {
-          const id = params.id
-          const res = await adminApi.putUser(id,editUser)
-          notifySuccess(res.message)
+          const id = params.id;
+          const res = await adminApi.putUser(id, editUser);
+          notifySuccess(res.message);
         } catch (error) {
           notifyError(
-            error.response.data.message ||
-              error.response.data.email ||
-              error.response.data.name ||
-              error.response.data.password
+            error.response.data.errors.email || error.response.data.errors.name
           );
         }
-      }
-      putUser()
+      };
+      putUser();
     },
   });
-
- 
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const id = params.id
-        const res = await adminApi.getInfoUser({id})
-        setUser(res.user)
-        setIsAdmin(res.user.isAdmin)
+        const id = params.id;
+        const res = await adminApi.getInfoUser(id);
+        setUser(res.user);
+        setIsAdmin(res.user.isAdmin);
       } catch (error) {
-        notifyError(error.response.data.message)
-        console.log(error)
+        notifyError(error.response.data.message);
+        console.log(error);
       }
-    }
-    fetchUser()
-  }, [])
+    };
+    fetchUser();
+  }, []);
 
   const handleBack = () => {
-    navigate('/admin/users')
-  }
+    navigate("/admin/users");
+  };
 
   const handleSubmit = () => {
-    formik.handleSubmit()
-  }
+    formik.handleSubmit();
+  };
 
   return (
     <>
@@ -109,10 +112,16 @@ const EditUser = props => {
                   <h3>Sửa người dùng</h3>
                 </div>
                 <div className="edit-user__header__right">
-                  <div onClick={() => handleBack()} className="edit-user__header__right-btn btn--cancel">
+                  <div
+                    onClick={() => handleBack()}
+                    className="edit-user__header__right-btn btn--cancel"
+                  >
                     Quay lại
                   </div>
-                  <div onClick={() => handleSubmit()} className="edit-user__header__right-btn btn--confirm">
+                  <div
+                    onClick={() => handleSubmit()}
+                    className="edit-user__header__right-btn btn--confirm"
+                  >
                     Sửa
                   </div>
                 </div>
@@ -120,50 +129,57 @@ const EditUser = props => {
               <div className="edit-user__body">
                 <Form>
                   <FormField>
-                    <FormInput type="text"
+                    <FormInput
+                      type="text"
                       name="name"
                       id="name"
                       value={formik.values.name}
                       onChange={formik.handleChange}
                     />
-                    <FormLabel for="name" label="Tên"/>
-                    <FormMessageError message={formik.errors.name}/>
+                    <FormLabel for="name" label="Tên" />
+                    <FormMessageError message={formik.errors.name} />
                   </FormField>
                   <FormField>
-                    <FormInput type="email"
+                    <FormInput
+                      type="email"
                       name="email"
                       id="email"
                       value={formik.values.email}
                       onChange={formik.handleChange}
                     />
-                    <FormLabel for="email" label="Email"/>
-                    <FormMessageError message={formik.errors.email}/>
+                    <FormLabel for="email" label="Email" />
+                    <FormMessageError message={formik.errors.email} />
                   </FormField>
-                  
+
                   <FormField>
-                    <FormInput type="text"
+                    <FormInput
+                      type="text"
                       name="phone"
                       id="phone"
                       value={formik.values.phone}
                       onChange={formik.handleChange}
                     />
-                    <FormLabel for="phone" label="Số điện thoại"/>
-                    <FormMessageError message={formik.errors.phone}/>
+                    <FormLabel for="phone" label="Số điện thoại" />
+                    <FormMessageError message={formik.errors.phone} />
                   </FormField>
                   <FormField>
-                    <FormInput type="text"
+                    <FormInput
+                      type="text"
                       name="address"
                       id="address"
                       value={formik.values.address}
                       onChange={formik.handleChange}
                     />
-                    <FormLabel for="address" label="Địa chỉ"/>
-                    <FormMessageError message={formik.errors.address}/>
+                    <FormLabel for="address" label="Địa chỉ" />
+                    <FormMessageError message={formik.errors.address} />
                   </FormField>
                   <FormField>
-                    <Checkbox checked={isAdmin} onChange={() => setIsAdmin(!isAdmin)} label="Admin"/> 
+                    <Checkbox
+                      checked={isAdmin}
+                      onChange={() => setIsAdmin(!isAdmin)}
+                      label="Admin"
+                    />
                   </FormField>
-                  
                 </Form>
               </div>
             </div>
@@ -171,9 +187,7 @@ const EditUser = props => {
         </div>
       </Helmet>
     </>
-  )
-}
+  );
+};
 
-
-
-export default EditUser
+export default EditUser;

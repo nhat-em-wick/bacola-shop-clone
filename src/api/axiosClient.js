@@ -29,15 +29,15 @@ axiosClient.interceptors.request.use(
       const decodeToken = jwt_decode(accessToken);
       if (decodeToken.exp < date.getTime() / 1000) {
         try {
-            const res = await axios.get(`${apiConfig.baseUrl}auth/refresh?refreshToken=${refreshToken}`);
+            const res = await axios.get(`${apiConfig.baseUrl}auth/refresh/${refreshToken}`);
             localStorage.setItem("accessToken", res.data.accessToken);
             localStorage.setItem("refreshToken", res.data.refreshToken);
-            config.headers.token = `Bearer ${res.data.accessToken}`;
+            config.headers.authorization = `Bearer ${res.data.accessToken}`;
         } catch (error) {
           console.log(error)
         }
       } else {
-        config.headers.token = `Bearer ${accessToken}`;
+        config.headers.authorization = `Bearer ${accessToken}`;
       }
     }
     return config;
