@@ -88,7 +88,7 @@ const Checkout = () => {
       const postOrder = async () => {
         try {
           const res = await userApi.postOrder(newOrder)
-          dispatch(updateCart([]))
+          dispatch(updateCart())
           notifySuccess(res.message)
           navigate('/my-account/order')
         } catch (error) {
@@ -100,11 +100,6 @@ const Checkout = () => {
     }
   });
 
-  useEffect(() => {
-    if(cartItems.length <= 0) {
-      navigate('/shop')
-    }
-  }, [cartItems])
   
   useEffect(() => {
     const getInfoUser = async () => {

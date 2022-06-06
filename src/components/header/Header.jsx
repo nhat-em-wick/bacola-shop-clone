@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Overlay from "../overlay/Overlay";
 import Input from "../input/Input";
 import Button, { ButtonCircle } from "../button/Button";
-
+import { useDebounce } from "../../hook";
 import { useSelector, useDispatch } from "react-redux";
 import {
   updateCart,
@@ -22,19 +22,21 @@ import { menuBacola, menuMobileBacola } from "../../constant/index";
 import shopApi from "../../api/shopApi";
 
 const Header = () => {
-  const q = useSelector((state) => state.filters.values?.q);
-
   const location = useLocation();
   const [shrink, setShrink] = useState(false);
   const [activeLink, setActiveLink] = useState(0);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-  const [valueSearch, setValueSearch] = useState(q);
+  const [valueSearch, setValueSearch] = useState("");
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 12,
+  });
   const navigate = useNavigate();
 
   const inputSearchRef = useRef(null);
   const inputSearchMobile = useRef("");
-  const typingTimoutRef = useRef(null)
+  const typingTimoutRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -65,25 +67,9 @@ const Header = () => {
     setOpenMenuMobile(!openMenuMobile);
   };
 
-  
-
   const handleOpenSearch = () => {
     inputSearchRef.current.focus();
     setOpenSearch(!openSearch);
-  };
-
-
-
-  const handleValueSearch = (e) => {
-    const value = e.target.value
-    setValueSearch(value);
-    if(typingTimoutRef.current) {
-       clearTimeout(typingTimoutRef.current)
-    }
-    typingTimoutRef.current = setTimeout(() => {
-      dispatch(updateFilters({ q: value }));
-    }, 500)
-    navigate('/shop')
   };
 
   const cartItems = useSelector((state) => state.cartItems.values.items);
@@ -125,12 +111,17 @@ const Header = () => {
                   <i className="bx bx-x"></i>
                 </div>
                 <div className="navbar__mobile-toggle__search">
-                  <Input
+                  <input
                     ref={inputSearchMobile}
                     value={valueSearch}
                     type="text"
                     placeholder="Tìm kiếm sản phẩm..."
-                    onChange={handleValueSearch}
+                    onChange={(e) => setValueSearch(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        navigate(`/search?q=${encodeURIComponent(valueSearch)}`);
+                      }
+                    }}
                   />
                 </div>
                 <ul className="navbar__mobile-toggle__list">
@@ -145,7 +136,6 @@ const Header = () => {
                   ))}
                   {currentUser ? (
                     <>
-                      
                       <li className={`navbar__mobile-toggle__list-item`}>
                         <Link to="my-account">Tài khoản</Link>
                       </li>
@@ -190,6 +180,27 @@ const Header = () => {
                   <i className="bx bx-search"></i>
                 </ButtonCircle>
                 <div
+                  className={`navbar__right-search__dropdown ${
+                    openSearch ? "active" : ""
+                  }`}
+                >
+                  <div className="navbar__right-search__input">
+                    <input
+                      ref={inputSearchRef}
+                      type="text"
+                      placeholder="Tìm kiếm sản phẩm..."
+                      onChange={(e) => setValueSearch(e.target.value)}
+                      value={valueSearch}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          navigate("/search?q=" + encodeURIComponent(valueSearch));
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                {/*
+                <div
                   className={`navbar__right-search__overlay 
                     ${openSearch ? "active" : ""}
                 `}
@@ -206,7 +217,7 @@ const Header = () => {
                     onChange={handleValueSearch}
                     value={valueSearch}
                   />
-                </div>
+                </div> */}
               </div>
               <div className="navbar__right-user">
                 <ButtonCircle>

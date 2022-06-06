@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const uploadFiles = async (files) => {
-  
   const uploaders = files.map(file => {
     const formData = new FormData()
     formData.append('file', file)
@@ -10,10 +9,13 @@ const uploadFiles = async (files) => {
       return res.data.url
     })
   })
-
-  const res = await axios.all(uploaders)
+  try {
+    const res = await Promise.all(uploaders)
+    return res
+  } catch (error) {
+    console.log(error)
+  }
   
-  return res
 }
 
 export default uploadFiles

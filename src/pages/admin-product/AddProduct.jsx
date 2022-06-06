@@ -42,7 +42,7 @@ const AddProduct = () => {
       category: '',
       short_description: '',
       long_description: '',
-      slug: ''
+      
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -56,7 +56,7 @@ const AddProduct = () => {
       category: Yup.string(),
       short_description: Yup.string(),
       long_description: Yup.string(),
-      slug: Yup.string()
+      
     }),
     onSubmit: (values) => {
       const newProduct = {
@@ -68,7 +68,6 @@ const AddProduct = () => {
         short_description: values.short_description,
         long_description: values.long_description,
         gallery: gallery,
-        slug: values.slug
       };
       const postNewProduct = async () => {
         try {
@@ -84,7 +83,6 @@ const AddProduct = () => {
             category: "",
             short_description: "",
             long_description: "",
-            slug: ''
           });
         } catch (error) {
           notifySuccess(error.response.data.message)
@@ -149,17 +147,7 @@ const AddProduct = () => {
                 <FormLabel for="name" label="Tên sản phẩm" />
                 <FormMessageError message={formik.errors.name} />
               </FormField>
-              <FormField>
-                <FormInput
-                  type="text"
-                  name="slug"
-                  id="slug"
-                  value={formik.values.slug}
-                  onChange={formik.handleChange}
-                />
-                <FormLabel for="slug" label="Đường dẫn" />
-                <FormMessageError message={formik.errors.slug} />
-              </FormField>
+            
               <FormField>
                 <FormInput
                   type="text"
@@ -199,8 +187,7 @@ const AddProduct = () => {
                   options={categories}
                   name="category"
                   label="Danh mục"
-                  value={formik.values.category}
-                  defaultValue={'62109fcb158736512e2792f0'}
+                  value={formik.values.category || '629a06c28455b0905bb1a43c'}
                   onChange={formik.handleChange}
                 />
               </FormField>
@@ -226,7 +213,7 @@ const AddProduct = () => {
            
           </Form>
           <div className="add-product__gallery">
-            <h4>Hình ảnh</h4>
+          <h4>Hình ảnh <span>(nhấn upload ảnh trước khi thêm sản phẩm)</span></h4> 
             <DropFileInput onFileChange={(files) => onFileChange(files)} submitted={submitted} />
           </div>
         </div>

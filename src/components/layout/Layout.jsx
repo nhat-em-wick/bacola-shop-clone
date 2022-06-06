@@ -1,18 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { Outlet, useLocation} from "react-router-dom";
 
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-
+import jwt_decode from "jwt-decode";
 import ProductViewModal from "../product-view-modal/ProductViewModal";
 import Dialog from "../dialog/Dialog";
 import { ButtonGoToTop } from "../scroll-to-top/ScrollToTop";
+import authApi from "../../api/authApi";
 import "./layout.scss";
 const Layout = () => {
+  const timerId = useRef()
 
-  const [loadingPage, setLoadingPage] = useState(false)
-  const {pathname} = useLocation()
-
+ 
  
   return (
     <>

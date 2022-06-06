@@ -20,7 +20,7 @@ const ProductViewModal = () => {
       if(productSlug !== null) {
         try {
           const response = await shopApi.getProduct(productSlug)
-          setProduct(response)
+          setProduct(response.product)
         } catch (error) {
           console.log(error)
         }

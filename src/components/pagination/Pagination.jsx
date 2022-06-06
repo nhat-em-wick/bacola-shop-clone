@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Button,{ButtonCircle} from '../button/Button';
-import { useSelector } from 'react-redux';
 import './pagination.scss'
 
 const Pagination = ({ Pagination, onPageChange, current }) => {

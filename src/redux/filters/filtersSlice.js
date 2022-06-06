@@ -1,25 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  values: {_page: 1, _limit: 12 , cate: [], q: ""}
+  q: ''
 };
 
 const filtersSlice = createSlice({
-  name: "filters",
+  name: "search",
   initialState,
   reducers: {
-    updateFilters: (state, action) => {
-      state.values = {
-        ...state.values,
-        ...action.payload,
-      };
+    updateValueSearch: (state, action) => {
+      state.q = action.payload;
     },
-    clearFilters: (state, action) => {
-      state.values = action.payload
-    }
   },
 });
 
-export const { updateFilters, clearFilters } = filtersSlice.actions;
+export const { updateValue } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

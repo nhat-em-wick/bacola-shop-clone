@@ -20,10 +20,20 @@ export const cartItemsSlice = createSlice({
   initialState,
   reducers: {
     updateCart: (state, action) => {
-      const newCart = action.payload;
-      state.values.items = newCart;
-      state.values.subTotal = subTotal(state.values.items);
-      state.values.totalProduct = totalProduct(state.values.items);
+      const newCart = { items: [], subTotal: 0, totalProduct: 0, totalPrice: 0 };
+      state.values.items = newCart.items;
+      state.values.subTotal = newCart.subTotal;
+      state.values.totalProduct = newCart.totalProduct;
+      state.values.totalPrice = newCart.totalPrice;
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify({
+          items: newCart.items,
+          subTotal: newCart.subTotal,
+          totalProduct: newCart.totalProduct,
+          totalPrice: newCart.totalPrice,
+        })
+      );
     },
     addItem: (state, action) => {
       const newItem = action.payload;

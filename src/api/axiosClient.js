@@ -2,7 +2,6 @@ import axios from "axios";
 import queryString from "query-string";
 import apiConfig from "./apiConfig";
 import jwt_decode from "jwt-decode";
-import Cookies from "universal-cookie";
 
 const axiosClient = axios.create({
   baseURL: apiConfig.baseUrl,
@@ -11,34 +10,25 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
   paramsSerializer: (params) =>
-    queryString.stringify({
-      ...params,
-    }, {arrayFormat: 'index'}),
+    queryString.stringify(
+      {
+        ...params,
+      },
+      { arrayFormat: "index" }
+    ),
 });
+
+const accessToken = localStorage.getItem("accessToken")
+  ? localStorage.getItem("accessToken")
+  : null;
 
 axiosClient.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem("accessToken")
       ? localStorage.getItem("accessToken")
       : null;
-    const refreshToken = localStorage.getItem("refreshToken")
-      ? localStorage.getItem("refreshToken")
-      : null;
     if (accessToken) {
-      let date = new Date();
-      const decodeToken = jwt_decode(accessToken);
-      if (decodeToken.exp < date.getTime() / 1000) {
-        try {
-            const res = await axios.get(`${apiConfig.baseUrl}auth/refresh/${refreshToken}`);
-            localStorage.setItem("accessToken", res.data.accessToken);
-            localStorage.setItem("refreshToken", res.data.refreshToken);
-            config.headers.authorization = `Bearer ${res.data.accessToken}`;
-        } catch (error) {
-          console.log(error)
-        }
-      } else {
-        config.headers.authorization = `Bearer ${accessToken}`;
-      }
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -47,15 +37,45 @@ axiosClient.interceptors.request.use(
   }
 );
 
+let refresh = false;
+const refreshTokenRequest = async (refreshToken) => {
+  const url = `${apiConfig.baseUrl}auth/refresh?token=${refreshToken}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
 axiosClient.interceptors.response.use(
-  (response) => {
+  async (response) => {
     if (response && response.data) {
       return response.data;
     }
     return response;
   },
-  (e) => {
-    throw e;
+  async (error) => {
+    const { response } = error;
+    if(refresh === true) {
+      refresh = false;
+    }
+    if (response.status === 403 && !refresh) {
+      refresh = true;
+      const refreshTokenLocal = localStorage.getItem("refreshToken")
+      try {
+        const { accessToken, refreshToken } = await refreshTokenRequest(
+          refreshTokenLocal
+        );
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        response.config.headers["Authorization"] = `Bearer ${accessToken}`;
+        return axiosClient(response.config);
+      } catch (error) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        return Promise.reject(error);
+      }
+    }
+    refresh = false;
+    
+    return Promise.reject(error);
   }
 );
 

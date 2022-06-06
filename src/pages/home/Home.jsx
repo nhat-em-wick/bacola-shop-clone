@@ -31,6 +31,7 @@ const Home = () => {
     slidesToShow: 5,
     slidesToScroll: 3,
     arrows: false,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -111,7 +112,7 @@ const Home = () => {
         <SectionBody>
           <div className="row no-gutters">
             {loading &&
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+              Array(10).fill().map((n) => (
                 <div key={n} className="l-2-4 m-4 c-6">
                   <Skeleton>
                     <SkeletonElement type="img" />
@@ -172,7 +173,7 @@ const Home = () => {
           <div className="product-slider">
             <Slider ref={sliderRef} {...settings}>
             { loading &&
-              [1, 2, 3, 4, 5].map((n) => (
+              Array(5).fill().map((n) => (
                 <div key={n}>
                   <Skeleton>
                     <SkeletonElement type="img" />
@@ -210,7 +211,7 @@ const Home = () => {
           <div className="row no-gutters">
 
           {loading &&
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+              Array(10).fill().map((n) => (
                 <div key={n} className="l-2-4 m-4 c-6">
                   <Skeleton>
                     <SkeletonElement type="img" />

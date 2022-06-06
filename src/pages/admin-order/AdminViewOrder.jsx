@@ -21,6 +21,7 @@ const AdminViewOrder = () => {
     const fetchOrder = async () => {
       try {
         const res = await adminApi.getOrder(params.id);
+        console.log(res)
         setOrder(res.order);
         setStatus(res.order.status);
         setPaid(res.order.paid)

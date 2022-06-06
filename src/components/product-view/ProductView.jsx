@@ -14,7 +14,7 @@ import shopApi from "../../api/shopApi";
 
 const ProductView = (props) => {
   const product = props.product;
-
+  
   const [previewImg, setPreviewImg] = useState(product.gallery[0]);
 
   const [quantity, setQuantity] = useState(1);
@@ -25,9 +25,7 @@ const ProductView = (props) => {
     setQuantity(1);
   }, [product]);
 
-  const trackingRef = useRef();
-
-  trackingRef.current = (item) => {
+  const trackingProduct = (item) => {
     let flag = true;
     const result =
       cartItems.length > 0 &&
@@ -74,11 +72,11 @@ const ProductView = (props) => {
   const dispatch = useDispatch();
 
   const addToCart = () => {
-    trackingRef.current(product);
+    trackingProduct(product);
   };
 
   const goToCheckout = () => {
-    const tracking = trackingRef.current(product);
+    const tracking = trackingProduct(product);
     if (tracking) {
       navigate("/checkout");
     } else {

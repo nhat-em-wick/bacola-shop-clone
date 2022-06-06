@@ -11,7 +11,7 @@ import { updateFilters, clearFilters } from "../../redux/filters/filtersSlice";
 import adminApi from "../../api/adminApi";
 import formatMoneyVND from "../../utils/formatMoney";
 import moment from "moment";
-
+import { useDebounce } from "../../hook";
 import "./admin-order.scss";
 
 const AdminOrder = (props) => {
@@ -23,7 +23,7 @@ const AdminOrder = (props) => {
   const navigate = useNavigate();
   const [orderList, setOrderList] = useState([]);
   const [pagination, setPagination] = useState();
-  const [valueSearch, setValueSearch] = useState('');
+  const [valueSearch, setValueSearch] = useState("");
 
   useEffect(() => {
     const fetchAllOrder = async () => {
@@ -37,19 +37,20 @@ const AdminOrder = (props) => {
     };
     fetchAllOrder();
   }, [filters]);
+
+
+  const debounce = useDebounce(valueSearch, 500);
+
+  useEffect(() => {
+    if (debounce.trim()) {
+      setFilters({ ...filters, q: encodeURIComponent(debounce.trim())});
+    } else {
+      setFilters({ ...filters, q: "" });
+    }
+  }, [debounce])
   
   const timerIdRef1 = useRef(null)
-  const handleValueSearch = (e) => {
-    const value = e.target.value
-    setValueSearch(value);
-    if(timerIdRef1.current) clearTimeout(timerIdRef1.current)
-    timerIdRef1.current = setTimeout(() => {
-      setFilters({
-        ...filters,
-        q: value
-      })
-    }, 500)
-  };
+  
 
   const handleViewOrder = (id) => {
     navigate(`/admin/orders/view/${id}`);
@@ -74,7 +75,7 @@ const AdminOrder = (props) => {
                 <Input
                   type="search"
                   placeholder="Tìm kiếm theo khách hàng, email"
-                  onChange={handleValueSearch}
+                  onChange={e=>setValueSearch(e.target.value)}
                   value={valueSearch}
                 />
               </div>

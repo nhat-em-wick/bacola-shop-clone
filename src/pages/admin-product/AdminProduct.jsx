@@ -12,6 +12,7 @@ import Form, {
 } from "../../components/form/Form";
 import { updateFilters, clearFilters } from "../../redux/filters/filtersSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useDebounce } from "../../hook";
 import Pagination from "../../components/pagination/Pagination";
 import Checkbox from "../../components/checkbox/Checkbox";
 import Dropdown from "../../components/dropdown/Dropdown";
@@ -45,6 +46,8 @@ const AdminProduct = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 
+  const debounce = useDebounce(valueSearch, 500);
+
  
   const dropdownActionRef = useRef();
 
@@ -61,6 +64,10 @@ const AdminProduct = () => {
     };
     fetchProduct();
   }, [filters, deleted]);
+
+  useEffect(() => {
+    setFilters({ ...filters, q: encodeURIComponent(debounce.trim())});
+  }, [debounce])
 
   const handlePageChange = (newPage) => {
     setFilters({
@@ -93,19 +100,6 @@ const AdminProduct = () => {
 
   const timerIdRef = useRef(null)
 
-  const handleValueSearch = (e) => {
-    const value = e.target.value
-    setValueSearch(value);
-    if(timerIdRef.current) {
-      clearTimeout(timerIdRef.current)
-    }
-    timerIdRef.current = setTimeout(() => {
-      setFilters({
-        ...filters,
-        q: value
-      })
-    }, 500)
-  };
 
 
   const handleCheckedAll = (type) => {
@@ -197,7 +191,7 @@ const AdminProduct = () => {
                       <Input
                         type="search"
                         placeholder="Tìm kiếm sản phẩm"
-                        onChange={handleValueSearch}
+                        onChange={(e) => setValueSearch(e.target.value)}
                         value={valueSearch}
                       />
                     </div>
@@ -211,7 +205,6 @@ const AdminProduct = () => {
                 ) : (
                   <>
                     <Table
-                      
                       renderHead={
                         <>
                           <th>
@@ -253,7 +246,7 @@ const AdminProduct = () => {
                           <td>{item.sold}</td>
                           <td>
                             <div className="product__category">
-                              {item.category.name}
+                              {item?.category?.name}
                             </div>
                           </td>
                           <td>

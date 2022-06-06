@@ -11,12 +11,15 @@ import { UserHead } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFilters, clearFilters } from "../../redux/filters/filtersSlice";
 import { notifySuccess, notifyError } from "../../components/toast/Toast";
-
+import { useDebounce } from "../../hook";
 import adminApi from "../../api/adminApi";
 
 import "./admin-user.scss";
 
 const AdminUser = () => {
+
+  const adminUser = useSelector(state => state.auth.login.currentUser);
+
   const [filters, setFilters] = useState({
     _page: 1, _limit: 12
   })
@@ -55,6 +58,16 @@ const AdminUser = () => {
     fetchUsers();
   }, [filters, deleted]);
 
+  const debounce = useDebounce(valueSearch, 500);
+
+  useEffect(() => {
+    if (debounce.trim()) {
+      setFilters({ ...filters, q: encodeURIComponent(debounce.trim())});
+    } else {
+      setFilters({ ...filters, q: "" });
+    }
+  }, [debounce])
+
   const handlePageChange = (newPage) => {
     setFilters({
       ...filters,
@@ -62,17 +75,7 @@ const AdminUser = () => {
     })
   };
 
-  const handleValueSearch = (e) => {
-    const value = e.target.value
-    setValueSearch(value);
-    if(timerIdRef.current) clearTimeout(timerIdRef.current)
-    timerIdRef.current = setTimeout(() => {
-      setFilters({
-        ...filters,
-        q: value
-      })
-    }, 500)
-  };
+  
 
  
 
@@ -186,7 +189,7 @@ const AdminUser = () => {
                     <Input
                       type="search"
                       placeholder="Tìm kiếm theo tên, email, sđt"
-                      onChange={handleValueSearch}
+                      onChange={e=>setValueSearch(e.target.value)}
                       value = {valueSearch}
                     />
                   </div>
@@ -242,14 +245,17 @@ const AdminUser = () => {
                               <i className="bx bx-edit"></i>
                               <span className="tooltip">Sửa</span>
                             </Link>
+                            {
+                              adminUser.id === item._id ? null : (
                             <div
                               onClick={() => handleDeleteUsers([item._id])}
                               className="user__action__item action--delete"
                             >
                               <i className="bx bx-trash"></i>
                               <span className="tooltip">Xóa</span>
-
                             </div>
+                              )
+                            }
                           </div>
                         </td>
                       </tr>

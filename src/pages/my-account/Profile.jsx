@@ -18,7 +18,6 @@ import "./profile.scss";
 const Profile = () => {
   const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.auth.login?.currentUser);
-  
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -65,7 +64,7 @@ const Profile = () => {
       };
       const fetchChangeInfo = async () => {
         try {
-          const res = await userApi.changeInfo( currentUser.id ,newInfo);
+          const res = await userApi.changeInfo(newInfo);
           notifySuccess(res.message);
           dispatch(loginSuccess(res.user))
         } catch (error) {
@@ -95,12 +94,16 @@ const Profile = () => {
       const newPassword = {
         password: values.password,
         newPassword: values.newPassword,
-        confNewPassword: values.confNewPassword,
       };
       const fetchChangePassword = async () => {
         try {
           const res = await userApi.changePassword(newPassword);
           notifySuccess(res.message);
+          changePassword.resetForm({
+            password: '',
+            newPassword: '',
+            confNewPassword: '',
+          });
         } catch (error) {
           console.log(error)
           notifyError(error.response.data.message);
@@ -113,8 +116,7 @@ const Profile = () => {
   useEffect(() => {
     const getInfoUser = async () => {
       try {
-        const id = currentUser.id
-        const res = await userApi.getInfoUser(id);
+        const res = await userApi.getInfoUser();
         setUser(res.user);
       } catch (error) {
         console.log(error);

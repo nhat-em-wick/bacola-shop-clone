@@ -21,7 +21,7 @@ const userApi = {
     const url =`orders/user/${id}`
     return axiosClient.put(url, params)
   },
-  changeInfo: (id, params) => {
+  changeInfo: (params) => {
     const url ='users/info'
     return axiosClient.put(url, params)
   },

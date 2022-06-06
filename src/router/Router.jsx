@@ -18,6 +18,7 @@ import Contact from '../pages/contact/Contact';
 import Forgot from '../pages/recovery-password/Forgot';
 import RecoveryPass from '../pages/recovery-password/RecoveryPass';
 import StatusOrder from '../pages/status-order/StatusOrder';
+import Search from '../pages/search/Search';
 import ProtectedRoute, {CheckLogin, CheckAdmin} from './ProtectedRoute';
 
 import LayoutAdmin from '../components/layout-admin/LayoutAdmin';
@@ -40,6 +41,7 @@ const Router = () => {
           <Route path="shop" element={<Shop/>}/>
           <Route path="/shop/:slug" element={<Product/>}/>
           <Route path="cart" element={<Cart/>}/>
+          <Route path="search" element={<Search/>}/>
           <Route element={<CheckLogin/>}>
             <Route path="login" element={<Login/>}/>
             <Route path="register" element={<Register/>}/>

@@ -19,7 +19,7 @@ const StatusOrder = () => {
     const fetchOrder = async () => {
       try {
         const res = await userApi.getOrderUser(params.orderId)
-        setOrder(res.order)
+        setOrder(res.order[0])
       } catch (error) {
         console.log(error)
         notifyError(error.response.data.message);
@@ -28,18 +28,19 @@ const StatusOrder = () => {
     fetchOrder()
   }, [])
 
+
   return (
     <div className='status-order'>
-      <div className="status-order__header">ID: {order._id}</div>
+      <div className="status-order__header">ID: {order?._id}</div>
       <ul className="status-order__step">
-        <li className={`status-order__step__item ${order.status > 0 && 'step--finished'}`}>
+        <li className={`status-order__step__item ${order?.status > 0 && 'step--finished'}`}>
           <div className="status-order__step__icon">
             <i className="bx bx-check"></i>
           </div>
           <div className="status-order__step__info">
             <h4>Đặt hàng thành công</h4>
             <span>
-              {moment(order.createdAt).format('M/D/YYYY, h:mm')}
+              {moment(order?.createdAt).format('M/D/YYYY, h:mm')}
             </span>
           </div>
         </li>

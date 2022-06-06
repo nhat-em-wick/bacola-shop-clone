@@ -43,14 +43,14 @@ export const  FormSelect = (props) => (
   <>
     <div className="form__select">
       <select
-        defaultValue={props.defaultValue}
+        value={props.value}
         name={props.name}
         onChange={props.onChange}
       >
         <option disabled>{props.label}</option>
         {props.options &&
           props.options.map((item, index) => (
-            <option key={index} value={item._id} >
+            <option key={index} value={item._id}>
               {item.name}
             </option>
           ))}

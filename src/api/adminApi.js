@@ -39,15 +39,15 @@ const adminApi = {
     return axiosClient.delete(url, {params})
   },
   getAllOrder: (params) => {
-    const url = '/orders'
+    const url = '/orders/customer'
     return axiosClient.get(url, {params})
   },
   getOrder: (id,params) => {
-    const url = `orders/${id}`
+    const url = `orders/customer/${id}`
     return axiosClient.get(url, params)
   },
   putOrder: (id, params) => {
-    const url = `orders/${id}`
+    const url = `orders/customer/${id}`
     return axiosClient.put(url, params)
   }
 }

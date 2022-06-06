@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 
 import { notifyError, notifySuccess } from "../../components/toast/Toast";
 import uploadFiles from "../../config/uploadImg";
@@ -6,7 +6,7 @@ import "./drop-file-input.scss";
 import uploadImg from "../../assets/images/cloud-upload-regular-240.png";
 const DropFileInput = (props) => {
   const wrapperRef = useRef();
-  const [fileList, setFileList] = useState(props.preview || []);
+  const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gallery, setGallery] = useState([])
   const onDragEnter = () => wrapperRef.current.classList.add("dragover");
@@ -19,9 +19,9 @@ const DropFileInput = (props) => {
       [...newFile].map((item) => (item.preview = URL.createObjectURL(item)));
       const updateList = [...fileList, ...newFile];
       setFileList(updateList);
-      
     }
   };
+
 
   const fileRemove = (file) => {
     const updateList = [...fileList];
@@ -97,8 +97,6 @@ const DropFileInput = (props) => {
       </div>
       </>
       ) : null}
-
-      
     </>
   );
 };

@@ -51,7 +51,7 @@ const Order = () => {
     setOpenDialog(!openDialog);
     const fetchCancelOrder = async () => {
       try {
-        const res = await userApi.updateStatusOrder(orderItemCancel._id);
+        const res = await userApi.updateStatusOrder(orderItemCancel._id, {type: 0});
         notifySuccess(res.message);
         setStausChange(!statusChange);
       } catch (error) {

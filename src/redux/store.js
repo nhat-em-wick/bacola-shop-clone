@@ -21,8 +21,8 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['productModal', ],
-  whitelist: ['auth', 'filters', 'method', 'cartItems']
+  blacklist: ['productModal', 'cartItems', 'filters'],
+  whitelist: ['auth', 'method']
 }
 
 const rootReducer = combineReducers({

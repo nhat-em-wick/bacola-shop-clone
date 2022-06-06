@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Section, { SectionBody } from "../../components/section/Section";
@@ -12,7 +12,7 @@ import Pagination from "../../components/pagination/Pagination";
 import Loading from "../../components/loading/Loading";
 import Skeleton, { SkeletonElement } from "../../components/skeleton/Skeleton";
 import Helmet from "../../components/helmet/Helmet";
-import { updateValueSearch } from "../../redux/filters/filtersSlice";
+import { updateFilters, clearFilters } from "../../redux/filters/filtersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import shopApi from "../../api/shopApi";
@@ -23,8 +23,8 @@ import { notifyError } from "../../components/toast/Toast";
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
-const Shop = () => {
-  
+const Search = () => {
+
   const [reload, setReload] = useState(false);
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -40,6 +40,8 @@ const Shop = () => {
 
   const timerIdRef = useRef(null)
 
+  let [searchParams, setSearchParams] = useSearchParams();
+  
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -90,6 +92,14 @@ const Shop = () => {
     return () => clearTimeout(timerIdRef.current);
   }, [filters]);
 
+  useEffect(() => {
+    setFilters({
+      ...filters,
+      q: searchParams.get('q')
+    })
+  }, [searchParams.get('q')])
+
+
   const handleFilterPrice = () => {
     setFilters ({
       ...filters,
@@ -118,7 +128,7 @@ const Shop = () => {
   };
 
   return (
-    <Helmet title="Cửa hàng">
+    <Helmet title="Tìm kiếm">
     <div className="shop">
       <Section>
         <SectionBody>
@@ -297,4 +307,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default Search;
