@@ -14,7 +14,7 @@ import shopApi from "../../api/shopApi";
 
 const ProductView = (props) => {
   const product = props.product;
-  
+
   const [previewImg, setPreviewImg] = useState(product.gallery[0]);
 
   const [quantity, setQuantity] = useState(1);
@@ -87,77 +87,72 @@ const ProductView = (props) => {
   return (
     <>
       <div className="product-view">
-        <div className="row">
-          <div className="col l-6 m-12 c-12">
-            <div className="product-view__img-wrapper">
-              <div className="product-view__img__list">
-                {product.gallery.map((item, index) => (
-                  <div className={`product-view__img__list__item ${item === previewImg && 'active'}`}>
-                    <img
-                      src={item}
-                      alt=""
-                      onClick={() => setPreviewImg(item)}
-                    />
-                  </div>
-                ))}
+        <div className="product-view__img-wrapper">
+          <div className="product-view__img__list">
+            {product.gallery.map((item, index) => (
+              <div
+                className={`product-view__img__list__item ${
+                  item === previewImg && "active"
+                }`}
+              >
+                <img src={item} alt="" onClick={() => setPreviewImg(item)} />
               </div>
-              <div className="product-view__img__main">
-                <img src={previewImg || product.gallery[0]} alt="" />
-              </div>
+            ))}
+          </div>
+          <div className="product-view__img__main">
+            <img src={previewImg || product.gallery[0]} alt="" />
+          </div>
+        </div>
+
+        <div className="product-view__info">
+          <div className="product-view__info__name">{product.name}</div>
+          <div className="product-view__info__price">
+            <span className="old">
+              {product.old_price && formatMoneyVND(product.old_price)}
+            </span>
+            <span className="new">{formatMoneyVND(product.new_price)}</span>
+          </div>
+          <div className="product-view__info__description">
+            Mô tả:{" "}
+            {product.short_description || "Chưa có mô tả cho sản phẩm này"}
+          </div>
+          <div className="product-view__info__quantity">
+            <div className="decrease">
+              <ButtonCircle onClick={() => updateQuantity("minus")}>
+                <i className="bx bx-minus"></i>
+              </ButtonCircle>
+            </div>
+            <div className="quantity">{quantity}</div>
+            <div className="increase">
+              <ButtonCircle onClick={() => updateQuantity("plus")}>
+                <i className="bx bx-plus"></i>
+              </ButtonCircle>
             </div>
           </div>
-          <div className="col l-6 m-12">
-            <div className="product-view__info">
-              <div className="product-view__info__name">{product.name}</div>
-              <div className="product-view__info__price">
-                <span className="old">
-                  {product.old_price && formatMoneyVND(product.old_price)}
-                </span>
-                <span className="new">{formatMoneyVND(product.new_price)}</span>
-              </div>
-              <div className="product-view__info__description">
-                Mô tả:{" "}
-                {product.short_description || "Chưa có mô tả cho sản phẩm này"}
-              </div>
-              <div className="product-view__info__quantity">
-                <div className="decrease">
-                  <ButtonCircle onClick={() => updateQuantity("minus")}>
-                    <i className="bx bx-minus"></i>
-                  </ButtonCircle>
-                </div>
-                <div className="quantity">{quantity}</div>
-                <div className="increase">
-                  <ButtonCircle onClick={() => updateQuantity("plus")}>
-                    <i className="bx bx-plus"></i>
-                  </ButtonCircle>
-                </div>
-              </div>
-              <div className="product-view__info__add-to-cart">
-                <Button onClick={() => addToCart()}>Thêm vào giỏ hàng</Button>
-                <Button onClick={() => goToCheckout()}>Mua ngay</Button>
-              </div>
-              <div className="product-view__info__category">
-                <span className="product-view__info__category__title">
-                  Danh mục:{" "}
-                </span>
-                <span className="product-view__info__category__list">
-                  {product.category.name}
-                </span>
-              </div>
-              <div className="product-view__info__social">
-                <ButtonCircle className="product-view__info__social__item facebook">
-                  <i className="bx bxl-facebook"></i>
-                </ButtonCircle>
+          <div className="product-view__info__add-to-cart">
+            <Button onClick={() => addToCart()}>Thêm vào giỏ hàng</Button>
+            <Button onClick={() => goToCheckout()}>Mua ngay</Button>
+          </div>
+          <div className="product-view__info__category">
+            <span className="product-view__info__category__title">
+              Danh mục:{" "}
+            </span>
+            <span className="product-view__info__category__list">
+              {product.category.name}
+            </span>
+          </div>
+          <div className="product-view__info__social">
+            <ButtonCircle className="product-view__info__social__item facebook">
+              <i className="bx bxl-facebook"></i>
+            </ButtonCircle>
 
-                <ButtonCircle className="product-view__info__social__item instagram">
-                  <i className="bx bxl-instagram"></i>
-                </ButtonCircle>
+            <ButtonCircle className="product-view__info__social__item instagram">
+              <i className="bx bxl-instagram"></i>
+            </ButtonCircle>
 
-                <ButtonCircle className="product-view__info__social__item twitter">
-                  <i className="bx bxl-twitter"></i>
-                </ButtonCircle>
-              </div>
-            </div>
+            <ButtonCircle className="product-view__info__social__item twitter">
+              <i className="bx bxl-twitter"></i>
+            </ButtonCircle>
           </div>
         </div>
       </div>

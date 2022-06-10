@@ -14,7 +14,7 @@ const Product = () => {
 
   const [activeTab, setActiveTab] = useState(0)
   const [productList, setProductList] = useState([])
-  const [product, setProduct] =  useState(undefined)
+  const [product, setProduct] =  useState()
   const [filters, setFilters] = useState({
     _page: 1,
     _limit: 5
@@ -25,8 +25,8 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productId = params.slug
-        const response = await shopApi.getProduct(productId)
+        const productSlug = params.slug
+        const response = await shopApi.getProduct(productSlug)
         setProduct(response.product)
         setFilters({
           ...filters,
@@ -92,12 +92,12 @@ const Product = () => {
                 <div 
                 className={`tab-title__item ${activeTab === 0 && 'active'}`}
                 onClick={() => hanldeActiveTab(0)}
-                >Mo ta</div>
+                >Mô tả</div>
                 <div 
                   className={`tab-title__item ${activeTab === 1 && 'active'}`}
                   onClick={() => hanldeActiveTab(1)}
                 >
-                  Danh gia
+                  Đánh giá
                 </div>
               </TabTitle>
               <TabContent>
